@@ -8,7 +8,7 @@ Tower* TowerFactory::createArrowTower(const QPoint& p)
 
 bool TowerFactory::registerTower(quint8 type, Tower*(*foncteur)(const QPoint&), const QString& icone)
 {
-    get().icones.insert(type, icone);
+    get().icones.insert(type, get().s_prefix+icone);
     return type_factory::instance().registerProduct(type, foncteur);
 }
 
@@ -21,4 +21,9 @@ TowerFactory::Nested& TowerFactory::get()
 {
     static Nested n;
     return n;
+}
+
+TowerFactory::Nested::Nested()
+{
+    s_prefix = "images/icones/";
 }

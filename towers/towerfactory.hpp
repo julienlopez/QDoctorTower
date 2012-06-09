@@ -25,7 +25,9 @@ private:
 
     class Nested {
     public:
+        Nested();
         type_map_icones icones;
+        QString s_prefix;
     };
 
     static Nested& get();
