@@ -1,0 +1,24 @@
+#include "towerfactory.hpp"
+#include "attackers/arrowtower.hpp"
+
+Tower* TowerFactory::createArrowTower(const QPoint& p)
+{
+    return type_factory::instance().create(ArrowTower::s_idType, p);
+}
+
+bool TowerFactory::registerTower(quint8 type, Tower*(*foncteur)(const QPoint&), const QString& icone)
+{
+    get().icones.insert(type, icone);
+    return type_factory::instance().registerProduct(type, foncteur);
+}
+
+const TowerFactory::type_map_icones& TowerFactory::icones()
+{
+    return get().icones;
+}
+
+TowerFactory::Nested& TowerFactory::get()
+{
+    static Nested n;
+    return n;
+}
