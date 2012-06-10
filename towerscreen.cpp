@@ -24,6 +24,7 @@ TowerScreen::TowerScreen(QWidget *parent) :
     for(TowerFactory::type_map_icones::const_iterator i = icones.begin(); i != icones.end(); ++i)
     {
         b = new TowerButton(i.key(), i.value());
+        connect(b, SIGNAL(changeEtat(quint8)), this, SIGNAL(changeEtat(quint8)));
         gl->addWidget(b, cpt/2, cpt%2);
         cpt++;
     }

@@ -3,8 +3,10 @@
 #include "tiles/tile.hpp"
 #include "creeps/creep.h"
 #include "engine.h"
+#include "towers/towerfactory.hpp"
 
 #include <QPainter>
+#include <QMouseEvent>
 
 Screen::EngineMessage::EngineMessage(QString _titre, QString _message, quint8 _compteur)
 {
@@ -17,7 +19,9 @@ Screen::Screen(Map *map, QWidget *parent) :
     QWidget(parent), m_currentMessage("","",0)
 {
     m_map = map;
+    m_currentTowerState = 0;
     setMinimumSize(800, 600);
+    setMouseTracking(true);
 }
 
 void Screen::onEngineMessage(QString titre, QString message)
@@ -25,6 +29,11 @@ void Screen::onEngineMessage(QString titre, QString message)
     m_currentMessage.titre = titre;
     m_currentMessage.message = message;
     m_currentMessage.compteur = 50;
+}
+
+void Screen::setTowerState(quint8 state)
+{
+    m_currentTowerState = state;
 }
 
 #include <QDebug>
@@ -48,7 +57,14 @@ void Screen::paintEvent(QPaintEvent* evt)
     foreach(Creep* c, creeps)
         c->draw(&p);
 
+    if(m_currentTowerState != 0)
+    {
+        QPixmap pix(TowerFactory::icones()[m_currentTowerState]);
+        p.drawPixmap(m_mousePos, pix, QRect(0, 0, 1, 1));
+    }
+
     p.restore();
+
     if(m_currentMessage.compteur > 0)
     {
         p.setPen(Qt::black);
@@ -62,4 +78,36 @@ void Screen::paintEvent(QPaintEvent* evt)
         p.drawText(QRect(0, height()/2, width(), height()/4), Qt::AlignCenter, m_currentMessage.message);
         m_currentMessage.compteur--;
     }
+}
+
+void Screen::mouseMoveEvent(QMouseEvent * evt)
+{
+    if(m_currentTowerState == 0) return;
+
+    QRect geom = geometry();
+    if(!geom.contains(evt->pos())) return;
+
+    qDebug() << "cursor pos: " << evt->pos() << " (" << geom.topLeft() << ")";
+    QPoint pos = evt->pos() - geom.topLeft();
+    double tailleCase = qMin((double)(width()-2)/m_map->largeur(), (double)(height()-2)/m_map->hauteur());
+    double offsetX = width() - tailleCase*m_map->largeur();
+    double offsetY = height() - tailleCase*m_map->hauteur();
+    qDebug() << "tailleCase: " << tailleCase;
+    qDebug() << "offsetX: " << offsetX;
+    qDebug() << "offsetY: " << offsetY;
+    QPoint mousePos((pos.x()-offsetX)/tailleCase, (pos.y()-offsetY)/tailleCase);
+    qDebug() << mousePos;
+
+    if(mousePos != m_mousePos)
+    {
+        m_mousePos = mousePos;
+        update();
+    }
+}
+
+void Screen::mouseReleaseEvent(QMouseEvent* evt)
+{
+    if(m_currentTowerState == 0) return;
+    if(m_mousePos.x() >= m_map->largeur() || m_mousePos.y() >= m_map->hauteur()) return;
+    Tower* t = TowerFactory::createTower(m_currentTowerState, m_mousePos);
 }

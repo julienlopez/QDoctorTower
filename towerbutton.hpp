@@ -14,9 +14,10 @@ private:
     QString m_icone;
 
 signals:
+    void changeEtat(quint8 type);
 
-public slots:
-
+private slots:
+    void onClick();
 };
 
 #endif // TOWERBUTTON_HPP

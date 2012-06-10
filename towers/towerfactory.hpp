@@ -16,6 +16,10 @@ public:
 
     static Tower* createArrowTower(const QPoint& p);
 
+    static Tower* createCanonTower(const QPoint& p);
+
+    static Tower* createTower(quint8 type, const QPoint& p);
+
     static bool registerTower(quint8, Tower*(*)(const QPoint&), const QString& icone);
 
     static const type_map_icones& icones();

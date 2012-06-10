@@ -1,9 +1,20 @@
 #include "towerfactory.hpp"
 #include "attackers/arrowtower.hpp"
+#include "attackers/canontower.hpp"
 
 Tower* TowerFactory::createArrowTower(const QPoint& p)
 {
     return type_factory::instance().create(ArrowTower::s_idType, p);
+}
+
+Tower* TowerFactory::createCanonTower(const QPoint& p)
+{
+    return type_factory::instance().create(CanonTower::s_idType, p);
+}
+
+Tower* TowerFactory::createTower(quint8 type, const QPoint& p)
+{
+    return type_factory::instance().create(type, p);
 }
 
 bool TowerFactory::registerTower(quint8 type, Tower*(*foncteur)(const QPoint&), const QString& icone)

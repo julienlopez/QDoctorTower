@@ -10,6 +10,7 @@ public:
     explicit TowerScreen(QWidget *parent = 0);
 
 signals:
+    void changeEtat(quint8 type);
 
 public slots:
 

@@ -24,14 +24,18 @@ signals:
     
 public slots:
     void onEngineMessage(QString, QString);
+    void setTowerState(quint8 state);
 
 protected:
     void paintEvent(QPaintEvent* evt);
+    void mouseMoveEvent(QMouseEvent* evt);
+    void mouseReleaseEvent(QMouseEvent* evt);
 
 private:
     EngineMessage m_currentMessage;
     Map* m_map;
-    
+    quint8 m_currentTowerState;
+    QPoint m_mousePos;
 };
 
 #endif // SCREEN_HPP
