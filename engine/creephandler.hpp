@@ -1,28 +1,23 @@
 #ifndef CREEPHANDLER_HPP
 #define CREEPHANDLER_HPP
 
-#include <QList>
+#include "iengine.hpp"
 
-class Creep;
-
-class QPointF;
 class QPoint;
 
-class CreepHandler
+class CreepHandler : public iEngine
 {
 public:
     CreepHandler();
 
-    virtual double dt() const =0;
+    virtual const QList<Creep*>& creeps() const;
 
 protected:
-    Creep* closestCreep(const QPointF& p) const;
+    virtual Creep* closestCreep(const QPointF& p) const;
 
     Creep* createCreep(const QPoint& spawn, const QPoint &goal, quint32 level);
 
-    QList<Creep*>& creeps();
-
-    const QList<Creep*>& creeps() const;
+    virtual QList<Creep*>& creeps();
 
     void maj();
 

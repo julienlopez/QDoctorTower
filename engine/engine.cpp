@@ -45,17 +45,26 @@ QPoint Engine::getNextGoal(const QPoint& p) const throw(AucunPointSuivant)
     throw AucunPointSuivant();
 }
 
-void Engine::addTower(Tower* t)
-{
-    Q_ASSERT(t);
-    m_towers << t;
-}
-
 void Engine::addBullet(Bullet* b)
 {
     Q_ASSERT(b);
     connect(b, SIGNAL(hasHit()), this, SLOT(onBulletHit()));
     m_bullets << b;
+}
+
+const QList<Creep*>& Engine::creeps() const
+{
+    return CreepHandler::creeps();
+}
+
+Creep* Engine::closestCreep(const QPointF& p) const
+{
+    return CreepHandler::closestCreep(p);
+}
+
+QList<Creep*>& Engine::creeps()
+{
+    return CreepHandler::creeps();
 }
 
 void Engine::start()
@@ -110,32 +119,7 @@ void Engine::onTimerClick()
         else ++i;//else m_bullets.erase(i++);
     }
 
-    foreach(Tower* t, m_towers)
-    {
-        if(!creeps().isEmpty() && t->canTarget())
-        {
-            Attacker* a = qobject_cast<Attacker*>(t);
-            Q_ASSERT(a);
-            Creep* c = a->cible();
-            if(c) //gestion de la cible sortant de la zone de portée
-            {
-                QPointF p(c->coords() - t->coords());
-                if(p.manhattanLength() > a->portee()*a->portee())
-                {
-                    a->setCible(0);
-                }
-            }
-            if(!c) //si pas de cible, on en cherche une nouvelle
-            {
-                c = closestCreep(a->coords());
-                if(c)
-                {
-                    a->setCible(c);
-                }
-            }
-        }
-        t->update(dt());
-    }
+    TowerHandler::maj();
 
     emit updated();
 }

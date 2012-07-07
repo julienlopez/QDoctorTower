@@ -54,7 +54,7 @@ void Screen::paintEvent(QPaintEvent* evt)
             (*m_map)(x, y)->draw(&p);
 
     p.setPen(Qt::black);
-    QList<Creep*>& creeps = Engine::instance()->creeps();
+    const QList<Creep*>& creeps = ((const Engine*)Engine::instance())->creeps();
     foreach(Creep* c, creeps)
         if(c) c->draw(&p);
 
