@@ -19,13 +19,18 @@ Tower* TowerFactory::createTower(quint8 type, const QPoint& p)
 
 bool TowerFactory::registerTower(quint8 type, Tower*(*foncteur)(const QPoint&), const QString& icone)
 {
-    get().icones.insert(type, get().s_prefix+icone);
+    get().icones.insert(type, icone);
     return type_factory::instance().registerProduct(type, foncteur);
 }
 
 const TowerFactory::type_map_icones& TowerFactory::icones()
 {
     return get().icones;
+}
+
+QString TowerFactory::prefixeIcones()
+{
+    return get().s_prefix;
 }
 
 TowerFactory::Nested& TowerFactory::get()

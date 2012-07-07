@@ -5,7 +5,7 @@ const quint8 Rat::s_idType = 1;
 
 Rat::Rat(const QPointF& p): Creep(p)
 {
-    setVitesse(5);//0.5);
+    setVitesse(0.5);
     setVieMax(20);
 }
 

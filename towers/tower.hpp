@@ -5,11 +5,13 @@
 #include <utils/updateable.hpp>
 
 #include <QPoint>
+#include <QObject>
 
 class Tile;
 
-class Tower : public HasCoords<QPoint>, public Updateable
+class Tower : public QObject, public HasCoords<QPoint>, public Updateable
 {
+    Q_OBJECT
 public:
     Tower(const QPoint& p);
 
@@ -18,6 +20,10 @@ public:
     const Tile* tile() const;
 
     void setTile(const Tile* tile);
+
+    virtual QString icone() const =0;
+
+    virtual bool canTarget() const = 0;
 
 private:
     const Tile* m_tile;

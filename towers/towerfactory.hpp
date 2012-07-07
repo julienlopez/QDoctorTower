@@ -24,6 +24,8 @@ public:
 
     static const type_map_icones& icones();
 
+    static QString prefixeIcones();
+
 private:
     typedef Factory<Tower, quint8, Tower*(*)(const QPoint&)> type_factory;
 

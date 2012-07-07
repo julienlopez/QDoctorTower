@@ -25,6 +25,8 @@ public:
 
     QBrush life2brush() const;
 
+    void hit(quint32 degats);
+
 protected:
     void setVieMax(quint32 viemax);
 

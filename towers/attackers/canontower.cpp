@@ -3,7 +3,7 @@
 
 const quint8 CanonTower::s_idType = 2;
 
-const QString CanonTower::s_icone = "canon_tower.png";
+const QString CanonTower::s_icone = TowerFactory::prefixeIcones()+"canon_tower.png";
 
 
 CanonTower::CanonTower(const QPoint& p): Attacker(p)
@@ -17,6 +17,11 @@ bool CanonTower::canGoOnWater() const
 void CanonTower::tirer()
 {
 
+}
+
+QString CanonTower::icone() const
+{
+    return s_icone;
 }
 
 namespace

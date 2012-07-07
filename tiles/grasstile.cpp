@@ -1,6 +1,7 @@
 #include "grasstile.hpp"
 #include "tilefactory.hpp"
 #include <towers/tower.hpp>
+#include "engine.h"
 
 const quint8 GrassTile::s_idType = 3;
 
@@ -17,6 +18,7 @@ bool GrassTile::addTower(Tower* tower)
     if(hasTower()) return false;
     setTower(tower);
     tower->setTile(this);
+    Engine::instance()->addTower(tower);
     return true;
 }
 

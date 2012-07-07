@@ -1,6 +1,7 @@
 #include "watertile.hpp"
 #include "tilefactory.hpp"
 #include "towers/tower.hpp"
+#include "engine.h"
 
 const quint8 WaterTile::s_idType = 2;
 
@@ -15,9 +16,9 @@ WaterTile* WaterTile::clone() const
 bool WaterTile::addTower(Tower* tower)
 {
     if(!tower || !tower->canGoOnWater() || hasTower()) return false;
-
     setTower(tower);
     tower->setTile(this);
+    Engine::instance()->addTower(tower);
     return true;
 }
 

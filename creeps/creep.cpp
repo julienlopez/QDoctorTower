@@ -69,3 +69,14 @@ QBrush Creep::life2brush() const
     double facteur = m_vie / m_vieMax;
     return QBrush(QColor(floor((1-facteur)*255), floor(facteur*255), 0));
 }
+
+void Creep::hit(quint32 degats)
+{
+    if(degats >= m_vie)
+    {
+        m_vie = 0;
+        emit dead();
+        return;
+    }
+    m_vie -= degats;
+}

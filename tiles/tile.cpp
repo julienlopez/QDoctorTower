@@ -1,4 +1,5 @@
 #include "tile.hpp"
+#include "towers/tower.hpp"
 
 #include <QPainter>
 
@@ -25,4 +26,10 @@ void Tile::draw(QPainter *painter, const QColor& couleur) const
     painter->setPen(Qt::black);
     painter->setBrush(couleur);
     painter->drawRect(coords().x(), coords().y(), 1, 1);
+    if(hasTower())
+    {
+        QString str = m_tower->icone();
+        QPixmap p(str);
+        painter->drawPixmap(QRect(coords(), QSize(1,1)), p);
+    }
 }

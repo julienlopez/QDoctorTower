@@ -1,12 +1,17 @@
 #include "arrowtower.hpp"
 #include <towers/towerfactory.hpp>
+#include "engine.h"
+#include "bullets/fleche.hpp"
 
 const quint8 ArrowTower::s_idType = 1;
 
-const QString ArrowTower::s_icone = "arrow_tower.png";
+const QString ArrowTower::s_icone = TowerFactory::prefixeIcones()+"arrow_tower.png";
 
 ArrowTower::ArrowTower(const QPoint& p): Attacker(p)
-{}
+{
+    setPortee(2);
+    setTempsRecharge(0.5);
+}
 
 bool ArrowTower::canGoOnWater() const
 {
@@ -15,7 +20,12 @@ bool ArrowTower::canGoOnWater() const
 
 void ArrowTower::tirer()
 {
+    Engine::instance()->addBullet(new Fleche(coords(), cible()));
+}
 
+QString ArrowTower::icone() const
+{
+    return s_icone;
 }
 
 namespace

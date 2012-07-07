@@ -11,6 +11,7 @@ class Map;
 class Creep;
 class QTimer;
 class Tower;
+class Bullet;
 
 class Engine : public QObject
 {
@@ -34,6 +35,12 @@ public:
 
     QPoint getNextGoal(const QPoint& p) const throw(AucunPointSuivant);
 
+    Creep* closestCreep(const QPointF& p) const;
+
+    void addTower(Tower* t);
+
+    void addBullet(Bullet* b);
+
 signals:
     void end();
     void updated();
@@ -51,6 +58,7 @@ private:
     Map* m_map;
     QTimer* m_timer;
     QList<Tower*> m_towers;
+    QList<Bullet*> m_bullets;
 
     void init();
 
@@ -60,6 +68,7 @@ private slots:
     void onTimerClick();
     void onCreepEscaped();
     void onCreepDied();
+    void onBulletHit();
 };
 
 #endif // ENGINE_H

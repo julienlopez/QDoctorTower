@@ -3,22 +3,20 @@
 
 #include <QVector2D>
 
-Fleche::Fleche(const QPointF& coords, Creep* cible): Bullet(coords)
+Fleche::Fleche(const QPointF& coords, Creep* cible): Bullet(coords, cible, 5)
 {
-    m_cible = cible;
-    Q_ASSERT(m_cible);
+    setVitesse(5);
 }
-
 
 void Fleche::update(double dt)
 {
-    Q_ASSERT(m_cible);
-    QVector2D reste(m_cible->coords() - coords());
+    if(!cible()) return;
+    QVector2D reste(cible()->coords() - coords());
     if(reste.lengthSquared() < vitesse()*dt)
     {
         //dernier deplacement
-        setCoords(m_cible->coords());
-        emit hit();
+        setCoords(cible()->coords());
+        onHit();
         return;
     }
     (*this) += (reste.normalized()*vitesse()*dt).toPointF();

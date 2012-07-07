@@ -4,6 +4,7 @@
 #include "creeps/creep.h"
 #include "engine.h"
 #include "towers/towerfactory.hpp"
+#include "towers/tower.hpp"
 
 #include <QPainter>
 #include <QMouseEvent>
@@ -55,7 +56,7 @@ void Screen::paintEvent(QPaintEvent* evt)
     p.setPen(Qt::black);
     QList<Creep*>& creeps = Engine::instance()->creeps();
     foreach(Creep* c, creeps)
-        c->draw(&p);
+        if(c) c->draw(&p);
 
     if(m_currentTowerState != 0)
     {
@@ -108,6 +109,16 @@ void Screen::mouseMoveEvent(QMouseEvent * evt)
 void Screen::mouseReleaseEvent(QMouseEvent* evt)
 {
     if(m_currentTowerState == 0) return;
+    if(evt->button() == Qt::RightButton)
+    {
+        m_currentTowerState = 0;
+        update();
+        return;
+    }
     if(m_mousePos.x() >= m_map->largeur() || m_mousePos.y() >= m_map->hauteur()) return;
-    Tower* t = TowerFactory::createTower(m_currentTowerState, m_mousePos);
+    Tower* tower = TowerFactory::createTower(m_currentTowerState, m_mousePos);
+    Q_ASSERT(tower);
+    Tile* tile = (*m_map)(m_mousePos.x(), m_mousePos.y());
+    Q_ASSERT(tile);
+    tile->addTower(tower);
 }

@@ -43,7 +43,12 @@ void Attacker::setCible(Creep* creep)
 {
     if(m_cible) disconnect(m_cible, SIGNAL(dead()), this, SLOT(onCreepDead()));
     m_cible = creep;
-    connect(creep, SIGNAL(dead()), this, SLOT(onCreepDead()));
+    if(creep) connect(creep, SIGNAL(dead()), this, SLOT(onCreepDead()));
+}
+
+bool Attacker::canTarget() const
+{
+    return true;
 }
 
 void Attacker::setTempsRecharge(double t)
@@ -65,6 +70,7 @@ void Attacker::onCreepDead()
 {
     Creep* creep = qobject_cast<Creep*>(sender());
     Q_ASSERT(creep);
-    Q_ASSERT(m_cible == creep);
+    //Q_ASSERT(m_cible == creep);
+    Q_UNUSED(creep);
     m_cible = 0;
 }

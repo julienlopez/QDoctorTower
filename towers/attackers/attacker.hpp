@@ -3,11 +3,9 @@
 
 #include <towers/tower.hpp>
 
-#include <QObject>
-
 class Creep;
 
-class Attacker : public QObject, public Tower
+class Attacker : public Tower
 {
     Q_OBJECT
 public:
@@ -26,6 +24,8 @@ public:
     void setCible(Creep* creep);
 
     virtual void tirer() =0;
+
+    virtual bool canTarget() const;
 
 protected:
     void setTempsRecharge(double t);
