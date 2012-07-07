@@ -2,7 +2,7 @@
 #include "map.hpp"
 #include "tiles/tile.hpp"
 #include "creeps/creep.h"
-#include "engine.h"
+#include "engine/engine.hpp"
 #include "towers/towerfactory.hpp"
 #include "towers/tower.hpp"
 

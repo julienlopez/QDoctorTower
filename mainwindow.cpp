@@ -2,7 +2,7 @@
 #include "map.hpp"
 #include "screen.hpp"
 #include "joueur.h"
-#include "engine.h"
+#include <engine/engine.hpp>
 #include "towerscreen.hpp"
 
 #include <QVBoxLayout>

@@ -1,6 +1,6 @@
 #include "creep.h"
 #include <utils/randomgenerator.hpp>
-#include <engine.h>
+#include <engine/engine.hpp>
 
 #include <QPainter>
 #include <QVector2D>

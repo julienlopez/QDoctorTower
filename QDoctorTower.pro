@@ -26,7 +26,7 @@ SOURCES += main.cpp\
     towers/attackers/attacker.cpp \
     creeps/creep.cpp \
     joueur.cpp \
-    engine.cpp \
+    engine/engine.cpp \
     creeps/creepfactory.cpp \
     creeps/rat.cpp \
     utils/exception.cpp \
@@ -35,7 +35,8 @@ SOURCES += main.cpp\
     towerscreen.cpp \
     bullets/fleche.cpp \
     towerbutton.cpp \
-    towers/attackers/canontower.cpp
+    towers/attackers/canontower.cpp \
+    engine/creephandler.cpp
 
 HEADERS  += \
     tiles/tile.hpp \
@@ -57,7 +58,6 @@ HEADERS  += \
     towers/attackers/attacker.hpp \
     creeps/creep.h \
     joueur.h \
-    engine.h \
     creeps/creepfactory.h \
     creeps/rat.hpp \
     utils/hascoords.hpp \
@@ -70,4 +70,6 @@ HEADERS  += \
     bullets/fleche.hpp \
     utils/moving.hpp \
     towerbutton.hpp \
-    towers/attackers/canontower.hpp
+    towers/attackers/canontower.hpp \
+    engine/engine.hpp \
+    engine/creephandler.hpp

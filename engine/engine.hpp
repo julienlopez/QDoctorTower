@@ -1,6 +1,8 @@
 #ifndef ENGINE_H
 #define ENGINE_H
 
+#include "creephandler.hpp"
+
 #include <utils/exception.hpp>
 
 #include <QObject>
@@ -8,12 +10,12 @@
 
 class Joueur;
 class Map;
-class Creep;
+class CreepHandler;
 class QTimer;
 class Tower;
 class Bullet;
 
-class Engine : public QObject
+class Engine : public QObject, public CreepHandler
 {
     Q_OBJECT
 public:
@@ -27,15 +29,11 @@ public:
 
     Engine(Joueur* player, Map* map, QObject *parent = 0);
 
-    QList<Creep*>& creeps();
-
     static Engine* instance();
 
-    double dt() const;
+    virtual double dt() const;
 
     QPoint getNextGoal(const QPoint& p) const throw(AucunPointSuivant);
-
-    Creep* closestCreep(const QPointF& p) const;
 
     void addTower(Tower* t);
 
@@ -53,7 +51,6 @@ public slots:
 private:
     bool m_started;
     quint8 m_compteur;
-    QList<Creep*> m_creeps;
     Joueur* m_player;
     Map* m_map;
     QTimer* m_timer;

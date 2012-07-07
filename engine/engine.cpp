@@ -1,4 +1,4 @@
-#include "engine.h"
+#include "engine.hpp"
 #include "joueur.h"
 #include "map.hpp"
 #include "creeps/creepfactory.h"
@@ -24,11 +24,6 @@ Engine::Engine(Joueur* player, Map* map, QObject *parent) :
     connect(m_timer, SIGNAL(timeout()), this, SLOT(onTimerClick()));
 }
 
-QList<Creep*>& Engine::creeps()
-{
-    return m_creeps;
-}
-
 Engine* Engine::instance()
 {
     return s_instance;
@@ -48,36 +43,6 @@ QPoint Engine::getNextGoal(const QPoint& p) const throw(AucunPointSuivant)
             return *i;
         }
     throw AucunPointSuivant();
-}
-
-namespace {
-struct DistCreep {
-    Creep* creep;
-    double distance;
-};
-}
-
-Creep* Engine::closestCreep(const QPointF& p) const
-{
-    QList<Creep*>::const_iterator i = m_creeps.begin();
-    while(i != m_creeps.end() && !(*i)) ++i;
-    if(i == m_creeps.end()) return 0;
-    DistCreep dc;
-    dc.creep = *i;
-    dc.distance = ((*i)->coords()-p).manhattanLength();
-    ++i;
-    double dist;
-    for(; i != m_creeps.end(); ++i)
-    {
-        if(!(*i)) continue;
-        dist = ((*i)->coords()-p).manhattanLength();
-        if(dist < dc.distance)
-        {
-            dc.creep = *i;
-            dc.distance = dist;
-        }
-    }
-    return dc.creep;
 }
 
 void Engine::addTower(Tower* t)
@@ -119,23 +84,15 @@ void Engine::init()
 
 void Engine::onTimerClick()
 {
-    if(m_compteur > 0 && (m_creeps.empty() || m_creeps.last()->coords().y() > 0.5))
+    if(m_compteur > 0 && (creeps().empty() || creeps().last()->coords().y() > 0.5))
     {
-        Creep* c = CreepFactory::createCreep(1, m_map->spawnPoint());
+        Creep* c = createCreep(m_map->spawnPoint(), *(++m_map->pathBegin()), 1);
         connect(c, SIGNAL(escaped()), this, SLOT(onCreepEscaped()));
         connect(c, SIGNAL(dead()), this, SLOT(onCreepDied()));
-        c->setGoal(*(++m_map->pathBegin()));
-        m_creeps << c;
         m_compteur--;
     }
 
-    for(QList<Creep*>::iterator i = m_creeps.begin(); i != m_creeps.end();)
-        if(*i)
-        {
-            (*i)->update(dt());
-            ++i;
-        }
-        else m_creeps.erase(i++);
+    CreepHandler::maj();
 
     qDebug() << "mise Ã  jour des balles {";
     qDebug() << m_bullets;
@@ -155,7 +112,7 @@ void Engine::onTimerClick()
 
     foreach(Tower* t, m_towers)
     {
-        if(!m_creeps.isEmpty() && t->canTarget())
+        if(!creeps().isEmpty() && t->canTarget())
         {
             Attacker* a = qobject_cast<Attacker*>(t);
             Q_ASSERT(a);
@@ -187,8 +144,7 @@ void Engine::onCreepEscaped()
 {
     Creep* c = qobject_cast<Creep*>(sender());
     Q_ASSERT(c);
-    m_creeps[m_creeps.indexOf(c)] = 0;
-    c->deleteLater();
+    removeCreep(c);
     m_player->addEscaped();
 }
 
@@ -196,8 +152,7 @@ void Engine::onCreepDied()
 {
     Creep* c = qobject_cast<Creep*>(sender());
     Q_ASSERT(c);
-    m_creeps[m_creeps.indexOf(c)] = 0;
-    c->deleteLater();
+    removeCreep(c);
     m_player->addKilled();
 }
 

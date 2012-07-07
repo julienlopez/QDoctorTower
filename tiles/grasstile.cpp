@@ -1,7 +1,7 @@
 #include "grasstile.hpp"
 #include "tilefactory.hpp"
 #include <towers/tower.hpp>
-#include "engine.h"
+#include "engine/engine.hpp"
 
 const quint8 GrassTile::s_idType = 3;
 
