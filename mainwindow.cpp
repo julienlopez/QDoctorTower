@@ -51,7 +51,7 @@ MainWindow::MainWindow(QWidget *parent)
     hl->addWidget(new QLabel(tr("Escaped: ")));
     hl->addWidget(lcd);
 
-    m_boutonDemarrer = new QPushButton("DÃ©marrer");
+    m_boutonDemarrer = new QPushButton("Démarrer");
     connect(m_boutonDemarrer, SIGNAL(clicked()), this, SLOT(onClickBoutonDemarrer()));
     hl->addWidget(m_boutonDemarrer);
 
