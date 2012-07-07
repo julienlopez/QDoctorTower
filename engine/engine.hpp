@@ -3,6 +3,7 @@
 
 #include "creephandler.hpp"
 #include "towerhandler.hpp"
+#include "bullethandler.hpp"
 
 #include <utils/exception.hpp>
 
@@ -11,11 +12,9 @@
 
 class Joueur;
 class Map;
-class CreepHandler;
 class QTimer;
-class Bullet;
 
-class Engine : public QObject, public CreepHandler, public TowerHandler
+class Engine : public QObject, public CreepHandler, public TowerHandler, public BulletHandler
 {
     Q_OBJECT
 public:
@@ -35,7 +34,7 @@ public:
 
     QPoint getNextGoal(const QPoint& p) const throw(AucunPointSuivant);
 
-    void addBullet(Bullet* b);
+    virtual void addBullet(Bullet* b);
 
     virtual const QList<Creep*>& creeps() const;
 
@@ -59,7 +58,6 @@ private:
     Joueur* m_player;
     Map* m_map;
     QTimer* m_timer;
-    QList<Bullet*> m_bullets;
 
     void init();
 

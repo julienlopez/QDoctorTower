@@ -1,10 +1,7 @@
 #include "engine.hpp"
 #include "joueur.h"
 #include "map.hpp"
-#include "creeps/creepfactory.h"
 #include "creeps/creep.h"
-#include "towers/tower.hpp"
-#include "towers/attackers/attacker.hpp"
 #include "bullets/bullet.hpp"
 
 #include <QTimer>
@@ -14,7 +11,7 @@ Engine* Engine::s_instance = 0;
 Engine::Engine(Joueur* player, Map* map, QObject *parent) :
     QObject(parent)
 {
-    Q_ASSERT_X(!s_instance, "Erreur avec l'engine", "l'Engine a d√©j√  √©t√© cr√©√©");
+    Q_ASSERT_X(!s_instance, "Erreur avec l'engine", "l'Engine a dÈj‡  ÈtÈ crÈÈ");
     s_instance = this;
     m_started = false;
     m_player = player;
@@ -47,9 +44,8 @@ QPoint Engine::getNextGoal(const QPoint& p) const throw(AucunPointSuivant)
 
 void Engine::addBullet(Bullet* b)
 {
-    Q_ASSERT(b);
+    BulletHandler::addBullet(b);
     connect(b, SIGNAL(hasHit()), this, SLOT(onBulletHit()));
-    m_bullets << b;
 }
 
 const QList<Creep*>& Engine::creeps() const
@@ -101,23 +97,9 @@ void Engine::onTimerClick()
         m_compteur--;
     }
 
-    CreepHandler::maj();
+    BulletHandler::maj();
 
-    qDebug() << "mise √  jour des balles {";
-    qDebug() << m_bullets;
-    qDebug() << "}";
-    Bullet* b;
-    for(QList<Bullet*>::iterator i = m_bullets.begin(); i != m_bullets.end();)
-    {
-        b = *i;
-        if(b)
-        {
-            qDebug() << m_bullets.indexOf(b) << ": " << b;
-            b->update(dt());
-            ++i;
-        }
-        else ++i;//else m_bullets.erase(i++);
-    }
+    CreepHandler::maj();
 
     TowerHandler::maj();
 
@@ -144,11 +126,6 @@ void Engine::onBulletHit()
 {
     qDebug() << "Engine::onBulletHit() {";
     Bullet* b = qobject_cast<Bullet*>(sender());
-    int i = m_bullets.indexOf(b);
-    qDebug() << i << ": " << b;
-    m_bullets[i] = 0;
-    b->deleteLater();
-    qDebug() << m_bullets[i];
-    qDebug() << m_bullets;
+    removeBullet(b);
     qDebug() << "}";
 }

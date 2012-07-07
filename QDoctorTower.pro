@@ -37,7 +37,8 @@ SOURCES += main.cpp\
     towerbutton.cpp \
     towers/attackers/canontower.cpp \
     engine/creephandler.cpp \
-    engine/towerhandler.cpp
+    engine/towerhandler.cpp \
+    engine/bullethandler.cpp
 
 HEADERS  += \
     tiles/tile.hpp \
@@ -75,4 +76,5 @@ HEADERS  += \
     engine/engine.hpp \
     engine/creephandler.hpp \
     engine/towerhandler.hpp \
-    engine/iengine.hpp
+    engine/iengine.hpp \
+    engine/bullethandler.hpp
