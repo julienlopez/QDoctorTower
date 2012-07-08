@@ -66,7 +66,7 @@ quint32 Creep::vieMax() const
 QBrush Creep::life2brush() const
 {
     //quint8 nbPaliers = 5;
-    double facteur = m_vie / m_vieMax;
+    double facteur = (double)m_vie / m_vieMax;
     return QBrush(QColor(floor((1-facteur)*255), floor(facteur*255), 0));
 }
 
