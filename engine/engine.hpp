@@ -38,6 +38,8 @@ public:
 
     virtual const QList<Creep*>& creeps() const;
 
+    void draw(QPainter* p) const;
+
 protected:
     virtual Creep* closestCreep(const QPointF& p) const;
 

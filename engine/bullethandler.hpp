@@ -5,6 +5,8 @@
 
 class Bullet;
 
+class QPainter;
+
 class BulletHandler : public iEngine
 {
 public:
@@ -16,6 +18,8 @@ protected:
     void maj();
 
     void removeBullet(Bullet *b);
+
+    void drawBullets(QPainter* p) const;
 
 private:
     QList<Bullet*> m_bullets;

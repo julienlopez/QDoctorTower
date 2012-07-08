@@ -63,6 +63,12 @@ QList<Creep*>& Engine::creeps()
     return CreepHandler::creeps();
 }
 
+void Engine::draw(QPainter* p) const
+{
+    drawCreeps(p);
+    drawBullets(p);
+}
+
 void Engine::start()
 {
     if(!m_started)

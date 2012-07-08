@@ -27,7 +27,12 @@ void BulletHandler::maj()
             b->update(dt());
             ++i;
         }
-        else ++i;//else m_bullets.erase(i++);
+        else ++i;
+//        else
+//        {
+//            (*i)->deleteLater();
+//            m_bullets.erase(i++);
+//        }
     }
 }
 
@@ -36,7 +41,12 @@ void BulletHandler::removeBullet(Bullet* b)
     int i = m_bullets.indexOf(b);
     qDebug() << i << ": " << b;
     m_bullets[i] = 0;
-    b->deleteLater();
+    //b->deleteLater();
     qDebug() << m_bullets[i];
     qDebug() << m_bullets;
+}
+
+void BulletHandler::drawBullets(QPainter *p) const
+{
+    foreach(Bullet* b, m_bullets) if(b) b->draw(p);
 }

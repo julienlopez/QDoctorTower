@@ -4,15 +4,16 @@
 #include "iengine.hpp"
 
 class QPoint;
+class QPainter;
 
 class CreepHandler : public iEngine
 {
 public:
     CreepHandler();
 
+protected:
     virtual const QList<Creep*>& creeps() const;
 
-protected:
     virtual Creep* closestCreep(const QPointF& p) const;
 
     Creep* createCreep(const QPoint& spawn, const QPoint &goal, quint32 level);
@@ -22,6 +23,8 @@ protected:
     void maj();
 
     void removeCreep(Creep* c);
+
+    void drawCreeps(QPainter* p) const;
 
 private:
     QList<Creep*> m_creeps;    

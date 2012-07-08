@@ -2,6 +2,7 @@
 #include "creeps/creep.h"
 
 #include <QVector2D>
+#include <QPainter>
 
 Fleche::Fleche(const QPointF& coords, Creep* cible): Bullet(coords, cible, 5)
 {
@@ -20,4 +21,10 @@ void Fleche::update(double dt)
         return;
     }
     (*this) += (reste.normalized()*vitesse()*dt).toPointF();
+}
+
+void Fleche::draw(QPainter* painter) const {
+    QPointF pointTo = QVector2D(cible()->coords()-coords()).normalized().toPointF();
+    pointTo /= 10;
+    painter->drawLine(coords(), coords()+pointTo);
 }

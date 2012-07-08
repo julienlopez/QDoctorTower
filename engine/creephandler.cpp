@@ -2,6 +2,8 @@
 #include <creeps/creep.h>
 #include <creeps/creepfactory.h>
 
+#include <QPainter>
+
 CreepHandler::CreepHandler()
 {}
 
@@ -68,4 +70,10 @@ void CreepHandler::removeCreep(Creep* c)
 {
     m_creeps[m_creeps.indexOf(c)] = 0;
     c->deleteLater();
+}
+
+void CreepHandler::drawCreeps(QPainter* p) const
+{
+    p->setPen(Qt::black);
+    foreach(Creep* c, m_creeps) if(c) c->draw(p);
 }

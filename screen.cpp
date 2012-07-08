@@ -53,10 +53,7 @@ void Screen::paintEvent(QPaintEvent* evt)
         for(quint8 y = 0; y < m_map->hauteur(); y++)
             (*m_map)(x, y)->draw(&p);
 
-    p.setPen(Qt::black);
-    const QList<Creep*>& creeps = ((const Engine*)Engine::instance())->creeps();
-    foreach(Creep* c, creeps)
-        if(c) c->draw(&p);
+    Engine::instance()->draw(&p);
 
     if(m_currentTowerState != 0)
     {

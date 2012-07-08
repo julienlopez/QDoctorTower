@@ -15,6 +15,11 @@ Creep* Bullet::cible()
     return m_cible;
 }
 
+const Creep* Bullet::cible() const
+{
+    return m_cible;
+}
+
 #include <QDebug>
 
 void Bullet::onHit()
