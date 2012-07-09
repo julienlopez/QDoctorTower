@@ -117,6 +117,7 @@ void Engine::onCreepEscaped()
     Creep* c = qobject_cast<Creep*>(sender());
     Q_ASSERT(c);
     removeCreep(c);
+    cleanUpBullets(c);
     m_player->addEscaped();
 }
 
@@ -125,6 +126,7 @@ void Engine::onCreepDied()
     Creep* c = qobject_cast<Creep*>(sender());
     Q_ASSERT(c);
     removeCreep(c);
+    cleanUpBullets(c);
     m_player->addKilled();
 }
 

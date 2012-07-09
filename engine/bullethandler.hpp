@@ -21,6 +21,8 @@ protected:
 
     void drawBullets(QPainter* p) const;
 
+    void cleanUpBullets(Creep* c);
+
 private:
     QList<Bullet*> m_bullets;
 };
