@@ -36,14 +36,14 @@ public:
 
     virtual void addBullet(Bullet* b);
 
-    virtual const QList<Creep*>& creeps() const;
+    virtual const type_liste_creep& creeps() const;
 
     void draw(QPainter* p) const;
 
 protected:
     virtual Creep* closestCreep(const QPointF& p) const;
 
-    virtual QList<Creep*>& creeps();
+    virtual type_liste_creep& creeps();
 
 signals:
     void end();

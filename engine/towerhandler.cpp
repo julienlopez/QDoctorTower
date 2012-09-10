@@ -16,20 +16,14 @@ void TowerHandler::maj()
 {
     foreach(Tower* t, m_towers)
     {
-        if(!creeps().isEmpty() && t->canTarget())
+        if(!creeps().empty() && t->canTarget())
         {
             Attacker* a = qobject_cast<Attacker*>(t);
             Q_ASSERT(a);
             Creep* c = a->cible();
-            if(c) //gestion de la cible sortant de la zone de portée
-            {
-                QPointF p(c->coords() - t->coords());
-                if(p.manhattanLength() > a->portee()*a->portee())
-                {
-                    a->setCible(0);
-                }
-            }
-            if(!c) //si pas de cible, on en cherche une nouvelle
+            if(c && a->isCreepInRange(c)) //gestion de la cible sortant de la zone de portée
+                a->setCible(0);
+            else //si pas de cible, on en cherche une nouvelle
             {
                 c = closestCreep(a->coords());
                 if(c)

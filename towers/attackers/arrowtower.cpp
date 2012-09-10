@@ -9,7 +9,7 @@ const QString ArrowTower::s_icone = TowerFactory::prefixeIcones()+"arrow_tower.p
 
 ArrowTower::ArrowTower(const QPoint& p): Attacker(p)
 {
-    setPortee(2);
+    setPortee(5);
     setTempsRecharge(0.5);
 }
 

@@ -20,11 +20,8 @@ const Creep* Bullet::cible() const
     return m_cible;
 }
 
-#include <QDebug>
-
 void Bullet::onHit()
 {
-    qDebug() << "Bullet::onHit()";
     Q_ASSERT(m_cible);
     cible()->hit(m_degats);
     emit hasHit();

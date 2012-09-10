@@ -8,4 +8,34 @@ public:
     typedef const T& const_reference;
 };
 
+/*
+// class template Select
+// Selectionne un des deux type en fonction d'une valeur booléenne constante
+// Utilisation: Select<flag, T, U>::type
+// où:
+// FLAG est un booléen constant lors de la compilation
+// T et U sont des types
+// type vaut T si flag vaut true, U sinon.
+*/
+template<bool flag, typename T, typename U> struct Select
+{
+    typedef T type;
+};
+
+template<typename T, typename U> struct Select<false, T, U>
+{
+    typedef U type;
+};
+
+/*
+// class template isPointer
+*/
+template<class T> struct IsPointer {
+        static const bool value = false;
+};
+
+template<class T> struct IsPointer<T*> {
+        static const bool value = true;
+};
+
 #endif

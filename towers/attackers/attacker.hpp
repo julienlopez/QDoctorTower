@@ -27,6 +27,8 @@ public:
 
     virtual bool canTarget() const;
 
+    bool isCreepInRange(Creep* creep) const;
+
 protected:
     void setTempsRecharge(double t);
 

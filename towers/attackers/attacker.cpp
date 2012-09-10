@@ -1,6 +1,10 @@
 #include "attacker.hpp"
 #include <creeps/creep.h>
 
+#include <cmath>
+
+#include <QVector2D>
+
 Attacker::Attacker(const QPoint& p): Tower(p)
 {
     m_tempsRecharge = 0;
@@ -42,6 +46,7 @@ Creep* Attacker::cible() const
 void Attacker::setCible(Creep* creep)
 {
     if(m_cible) disconnect(m_cible, SIGNAL(dead()), this, SLOT(onCreepDead()));
+    if(creep && !isCreepInRange(creep)) return;
     m_cible = creep;
     if(creep) connect(creep, SIGNAL(dead()), this, SLOT(onCreepDead()));
 }
@@ -49,6 +54,11 @@ void Attacker::setCible(Creep* creep)
 bool Attacker::canTarget() const
 {
     return true;
+}
+
+bool Attacker::isCreepInRange(Creep* creep) const
+{
+    return QVector2D(creep->coords()-coords()).lengthSquared() <= pow(portee(),2);
 }
 
 void Attacker::setTempsRecharge(double t)
@@ -70,7 +80,6 @@ void Attacker::onCreepDead()
 {
     Creep* creep = qobject_cast<Creep*>(sender());
     Q_ASSERT(creep);
-    //Q_ASSERT(m_cible == creep);
     Q_UNUSED(creep);
     m_cible = 0;
 }

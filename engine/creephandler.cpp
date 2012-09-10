@@ -16,7 +16,7 @@ struct DistCreep {
 
 Creep* CreepHandler::closestCreep(const QPointF& p) const
 {
-    QList<Creep*>::const_iterator i = m_creeps.begin();
+    type_liste_creep::const_iterator i = m_creeps.begin();
     while(i != m_creeps.end() && !(*i)) ++i;
     if(i == m_creeps.end()) return 0;
     DistCreep dc;
@@ -45,19 +45,19 @@ Creep* CreepHandler::createCreep(const QPoint &spawn, const QPoint &goal, quint3
     return c;
 }
 
-QList<Creep*>& CreepHandler::creeps()
+CreepHandler::type_liste_creep& CreepHandler::creeps()
 {
     return m_creeps;
 }
 
-const QList<Creep*>& CreepHandler::creeps() const
+const CreepHandler::type_liste_creep& CreepHandler::creeps() const
 {
     return m_creeps;
 }
 
 void CreepHandler::maj()
 {
-    for(QList<Creep*>::iterator i = m_creeps.begin(); i != m_creeps.end();)
+    for(type_liste_creep::iterator i = m_creeps.begin(); i != m_creeps.end();)
         if(*i)
         {
             (*i)->update(dt());

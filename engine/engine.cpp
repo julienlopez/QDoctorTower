@@ -48,7 +48,7 @@ void Engine::addBullet(Bullet* b)
     connect(b, SIGNAL(hasHit()), this, SLOT(onBulletHit()));
 }
 
-const QList<Creep*>& Engine::creeps() const
+const Engine::type_liste_creep& Engine::creeps() const
 {
     return CreepHandler::creeps();
 }
@@ -58,7 +58,7 @@ Creep* Engine::closestCreep(const QPointF& p) const
     return CreepHandler::closestCreep(p);
 }
 
-QList<Creep*>& Engine::creeps()
+Engine::type_liste_creep& Engine::creeps()
 {
     return CreepHandler::creeps();
 }
@@ -90,8 +90,6 @@ void Engine::init()
     emit message("Niveau 1!", "rats");
     m_compteur = 20;
 }
-
-#include <QDebug>
 
 void Engine::onTimerClick()
 {
@@ -132,8 +130,6 @@ void Engine::onCreepDied()
 
 void Engine::onBulletHit()
 {
-    qDebug() << "Engine::onBulletHit() {";
     Bullet* b = qobject_cast<Bullet*>(sender());
     removeBullet(b);
-    qDebug() << "}";
 }
