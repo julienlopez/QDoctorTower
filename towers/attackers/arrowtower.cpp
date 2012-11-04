@@ -20,7 +20,7 @@ bool ArrowTower::canGoOnWater() const
 
 void ArrowTower::tirer()
 {
-    Engine::instance()->addBullet(new Fleche(coords(), cible()));
+    Engine::instance()->addBullet(Engine::sp_bullet(new Fleche(coords(), cible())));
 }
 
 QString ArrowTower::icone() const

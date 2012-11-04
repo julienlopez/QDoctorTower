@@ -8,7 +8,8 @@ class Tower;
 class TowerHandler : public iEngine
 {
 public:
-    typedef List<Tower*> type_liste;
+    typedef boost::shared_ptr<Tower> sp_tower;
+    typedef std::list<sp_tower> type_liste;
 
     TowerHandler();
 

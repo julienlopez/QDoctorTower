@@ -20,19 +20,19 @@ QString Joueur::pseudo() const
 void Joueur::addEscaped(quint32 nb)
 {
     m_nbEscaped += nb;
-    emit nbEscapedChanged(m_nbEscaped);
+    Q_EMIT nbEscapedChanged(m_nbEscaped);
 }
 
 void Joueur::addKilled(quint32 nb)
 {
     m_nbKilled += nb;
-    emit nbKilledChanged(m_nbKilled);
+    Q_EMIT nbKilledChanged(m_nbKilled);
 }
 
 void Joueur::addGold(quint32 qtt)
 {
     m_gold += qtt;
-    emit goldChanged(m_gold);
+    Q_EMIT goldChanged(m_gold);
 }
 
 void Joueur::retrieveGold(quint32 qtt) throw(std::invalid_argument)
@@ -43,5 +43,5 @@ void Joueur::retrieveGold(quint32 qtt) throw(std::invalid_argument)
 void Joueur::setPseudo(QString pseudo)
 {
     m_pseudo = pseudo;
-    emit pseudoChanged(m_pseudo);
+    Q_EMIT pseudoChanged(m_pseudo);
 }

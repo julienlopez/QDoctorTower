@@ -34,23 +34,25 @@ public:
 
     QPoint getNextGoal(const QPoint& p) const throw(AucunPointSuivant);
 
-    virtual void addBullet(Bullet* b);
-
     virtual const type_liste_creep& creeps() const;
 
     void draw(QPainter* p) const;
 
 protected:
-    virtual Creep* closestCreep(const QPointF& p) const;
+    virtual sp_creep closestCreep(const QPointF& p) const;
 
     virtual type_liste_creep& creeps();
 
-signals:
+    void onCreepEscaped(wp_creep creep);
+
+    void onCreepDied(wp_creep creep);
+
+Q_SIGNALS:
     void end();
     void updated();
     void message(QString titre, QString message);
 
-public slots:
+public Q_SLOTS:
     void start();
     void pause();
 
@@ -65,11 +67,8 @@ private:
 
     static Engine* s_instance;
 
-private slots:
+private Q_SLOTS:
     void onTimerClick();
-    void onCreepEscaped();
-    void onCreepDied();
-    void onBulletHit();
 };
 
 #endif // ENGINE_H

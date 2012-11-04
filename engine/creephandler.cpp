@@ -9,16 +9,16 @@ CreepHandler::CreepHandler()
 
 namespace {
 struct DistCreep {
-    Creep* creep;
+    CreepHandler::sp_creep creep;
     double distance;
 };
 }
 
-Creep* CreepHandler::closestCreep(const QPointF& p) const
+CreepHandler::sp_creep CreepHandler::closestCreep(const QPointF& p) const
 {
     type_liste_creep::const_iterator i = m_creeps.begin();
     while(i != m_creeps.end() && !(*i)) ++i;
-    if(i == m_creeps.end()) return 0;
+    if(i == m_creeps.end()) return sp_creep();
     DistCreep dc;
     dc.creep = *i;
     dc.distance = ((*i)->coords()-p).manhattanLength();
@@ -41,7 +41,7 @@ Creep* CreepHandler::createCreep(const QPoint &spawn, const QPoint &goal, quint3
 {
     Creep* c = CreepFactory::createCreep(level, spawn);
     c->setGoal(goal);
-    m_creeps << c;
+    m_creeps.push_back(sp_creep(c));
     return c;
 }
 
@@ -66,14 +66,17 @@ void CreepHandler::maj()
         else m_creeps.erase(i++);
 }
 
-void CreepHandler::removeCreep(Creep* c)
+void CreepHandler::removeCreep(wp_creep c)
 {
-    m_creeps[m_creeps.indexOf(c)] = 0;
-    c->deleteLater();
+    sp_creep creep = c.lock();
+    Q_ASSERT(creep.get());
+    type_liste_creep::iterator it = std::find(m_creeps.begin(), m_creeps.end(), creep);
+    Q_ASSERT(it != m_creeps.end());
+    m_creeps.erase(it);
 }
 
 void CreepHandler::drawCreeps(QPainter* p) const
 {
     p->setPen(Qt::black);
-    foreach(Creep* c, m_creeps) if(c) c->draw(p);
+    Q_FOREACH(sp_creep c, m_creeps) if(c) c->draw(p);
 }

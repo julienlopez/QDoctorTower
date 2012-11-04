@@ -6,7 +6,7 @@
 class Fleche : public Bullet
 {
 public:
-    Fleche(const QPointF& coords, Creep* cible);
+    Fleche(const QPointF& coords, wp_creep cible);
 
     virtual void update(double dt);
 

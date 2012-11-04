@@ -20,9 +20,7 @@ public:
 
     explicit Screen(Map* map, QWidget *parent = 0);
     
-signals:
-    
-public slots:
+public Q_SLOTS:
     void onEngineMessage(QString, QString);
     void setTowerState(quint8 state);
 

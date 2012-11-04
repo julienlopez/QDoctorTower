@@ -5,8 +5,6 @@
 
 class ArrowTower : public Attacker
 {
-    Q_OBJECT
-
 public:
     ArrowTower(const QPoint& p);
 

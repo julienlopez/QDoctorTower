@@ -1,14 +1,14 @@
 #ifndef ATTACKER_HPP
 #define ATTACKER_HPP
 
+#include <creeps/creep.h>
 #include <towers/tower.hpp>
-
-class Creep;
 
 class Attacker : public Tower
 {
-    Q_OBJECT
 public:
+    typedef boost::weak_ptr<Creep> wp_creep;
+
     Attacker(const QPoint& p);
 
     virtual void update(double dt);
@@ -19,15 +19,15 @@ public:
 
     double compteurRecharge() const;
 
-    Creep* cible() const;
+    wp_creep cible() const;
 
-    void setCible(Creep* creep);
+    void setCible(wp_creep creep);
 
     virtual void tirer() =0;
 
     virtual bool canTarget() const;
 
-    bool isCreepInRange(Creep* creep) const;
+    bool isCreepInRange(wp_creep creep) const;
 
 protected:
     void setTempsRecharge(double t);
@@ -40,10 +40,7 @@ private:
     double m_tempsRecharge;
     double m_portee;
     double m_compteurRecharge;
-    Creep* m_cible;
-
-private slots:
-    void onCreepDead();
+    wp_creep m_cible;
 };
 
 #endif // ATTACKER_HPP

@@ -1,28 +1,39 @@
 #include "bullet.hpp"
 #include "creeps/creep.h"
 
-Bullet::Bullet(const QPointF& coords, Creep* cible, quint32 degats, QObject *parent) :
-    QObject(parent), Moving<QPointF>(coords), m_degats(degats)
+Bullet::Bullet(const QPointF& coords, wp_creep cible, quint32 degats) :
+    Moving<QPointF>(coords), m_degats(degats)
 {
-    Q_ASSERT(cible);
+    Q_ASSERT(!cible.expired());
     m_cible = cible;
-    connect(m_cible, SIGNAL(dead()), this, SLOT(deleteLater()));
-    connect(m_cible, SIGNAL(escaped()), this, SLOT(deleteLater()));
 }
 
-Creep* Bullet::cible()
+#include <QDebug>
+Bullet::~Bullet()
+{
+    qDebug() << "destruction bullet " << (long)this; // << " => " << (long)cible().get();
+}
+
+Bullet::wp_creep Bullet::cible()
 {
     return m_cible;
 }
 
-const Creep* Bullet::cible() const
+Bullet::wp_creep Bullet::cible() const
 {
     return m_cible;
+}
+
+void Bullet::clearCible()
+{
+    m_cible.reset();
 }
 
 void Bullet::onHit()
 {
-    Q_ASSERT(m_cible);
-    cible()->hit(m_degats);
-    emit hasHit();
+    if(m_cible.expired()) return;
+    sp_creep c = cible().lock();
+    Q_ASSERT(c.get());
+    c->hit(m_degats);
+    emitToDel();
 }

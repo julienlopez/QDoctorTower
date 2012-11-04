@@ -28,7 +28,7 @@ private:
 
     void setUpPlayer();
 
-private slots:
+private	Q_SLOTS:
     void onClickBoutonDemarrer();
     void onEngineDone();
 };

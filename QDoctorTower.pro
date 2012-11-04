@@ -1,15 +1,14 @@
-#-------------------------------------------------
-#
-# Project created by QtCreator 2012-06-02T13:59:57
-#
-#-------------------------------------------------
+include(QDoctorTower.pri)
 
 QT       += core gui
+CONFIG += no_keywords
 
 TARGET = QDoctorTower
 TEMPLATE = app
 
 INCLUDEPATH += .
+
+CXXFLAGS += -Og
 
 SOURCES += main.cpp\
         mainwindow.cpp \
@@ -78,4 +77,5 @@ HEADERS  += \
     engine/towerhandler.hpp \
     engine/iengine.hpp \
     engine/bullethandler.hpp \
-    utils/list.hpp
+    utils/todelsender.hpp \
+    utils/predicates.hpp

@@ -2,7 +2,6 @@
 #define BULLETHANDLER_HPP
 
 #include "iengine.hpp"
-#include <utils/list.hpp>
 
 class Bullet;
 
@@ -11,20 +10,21 @@ class QPainter;
 class BulletHandler : public iEngine
 {
 public:
-    typedef List<Bullet*> type_liste;
+    typedef boost::shared_ptr<Bullet> sp_bullet;
+    typedef std::list<sp_bullet> type_liste;
 
     BulletHandler();
 
-    virtual void addBullet(Bullet* b);
+    virtual void addBullet(sp_bullet b);
 
 protected:
     void maj();
 
-    void removeBullet(Bullet *b);
+    void removeBullet(Bullet& b);
 
     void drawBullets(QPainter* p) const;
 
-    void cleanUpBullets(Creep* c);
+    void cleanUpBullets(wp_creep c);
 
 private:
     type_liste m_bullets;

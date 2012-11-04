@@ -5,7 +5,6 @@
 
 class CanonTower : public Attacker
 {
-    Q_OBJECT
 public:
     explicit CanonTower(const QPoint& p);
 

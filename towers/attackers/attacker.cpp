@@ -10,13 +10,12 @@ Attacker::Attacker(const QPoint& p): Tower(p)
     m_tempsRecharge = 0;
     m_portee = 0;
     m_compteurRecharge = 0;
-    m_cible = 0;
 }
 
 void Attacker::update(double dt)
 {
     if(m_compteurRecharge < m_tempsRecharge) m_compteurRecharge += dt;
-    if(m_cible && m_compteurRecharge >= m_tempsRecharge)
+    if(!m_cible.expired() && m_compteurRecharge >= m_tempsRecharge)
     {
         tirer();
         m_compteurRecharge -= m_tempsRecharge;
@@ -38,17 +37,20 @@ double Attacker::compteurRecharge() const
     return m_compteurRecharge;
 }
 
-Creep* Attacker::cible() const
+Attacker::wp_creep Attacker::cible() const
 {
     return m_cible;
 }
 
-void Attacker::setCible(Creep* creep)
+void Attacker::setCible(wp_creep creep)
 {
-    if(m_cible) disconnect(m_cible, SIGNAL(dead()), this, SLOT(onCreepDead()));
-    if(creep && !isCreepInRange(creep)) return;
+    Q_ASSERT(!creep.expired());
+    boost::shared_ptr<Creep> c = creep.lock();
+    Q_ASSERT(c.get());
+    boost::shared_ptr<Creep> cible = m_cible.lock();
+    if(c.get() == cible.get()) return;
+    if(!isCreepInRange(c)) return;
     m_cible = creep;
-    if(creep) connect(creep, SIGNAL(dead()), this, SLOT(onCreepDead()));
 }
 
 bool Attacker::canTarget() const
@@ -56,9 +58,12 @@ bool Attacker::canTarget() const
     return true;
 }
 
-bool Attacker::isCreepInRange(Creep* creep) const
+bool Attacker::isCreepInRange(wp_creep creep) const
 {
-    return QVector2D(creep->coords()-coords()).lengthSquared() <= pow(portee(),2);
+    Q_ASSERT(!creep.expired());
+    boost::shared_ptr<Creep> c = creep.lock();
+    Q_ASSERT(c.get());
+    return QVector2D(c->coords()-coords()).lengthSquared() <= pow(portee(),2);
 }
 
 void Attacker::setTempsRecharge(double t)
@@ -74,12 +79,4 @@ void Attacker::setPortee(double t)
 void Attacker::setCompteurRecharge(double d)
 {
     m_compteurRecharge = d;
-}
-
-void Attacker::onCreepDead()
-{
-    Creep* creep = qobject_cast<Creep*>(sender());
-    Q_ASSERT(creep);
-    Q_UNUSED(creep);
-    m_cible = 0;
 }

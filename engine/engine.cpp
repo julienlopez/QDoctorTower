@@ -4,6 +4,8 @@
 #include "creeps/creep.h"
 #include "bullets/bullet.hpp"
 
+#include <boost/bind.hpp>
+
 #include <QTimer>
 
 Engine* Engine::s_instance = 0;
@@ -42,18 +44,12 @@ QPoint Engine::getNextGoal(const QPoint& p) const throw(AucunPointSuivant)
     throw AucunPointSuivant();
 }
 
-void Engine::addBullet(Bullet* b)
-{
-    BulletHandler::addBullet(b);
-    connect(b, SIGNAL(hasHit()), this, SLOT(onBulletHit()));
-}
-
 const Engine::type_liste_creep& Engine::creeps() const
 {
     return CreepHandler::creeps();
 }
 
-Creep* Engine::closestCreep(const QPointF& p) const
+iEngine::sp_creep Engine::closestCreep(const QPointF& p) const
 {
     return CreepHandler::closestCreep(p);
 }
@@ -61,6 +57,24 @@ Creep* Engine::closestCreep(const QPointF& p) const
 Engine::type_liste_creep& Engine::creeps()
 {
     return CreepHandler::creeps();
+}
+
+void Engine::onCreepEscaped(wp_creep creep)
+{
+    sp_creep c = creep.lock();
+    Q_ASSERT(c);
+    removeCreep(c);
+    cleanUpBullets(c);
+    m_player->addEscaped();
+}
+
+void Engine::onCreepDied(wp_creep creep)
+{
+    sp_creep c = creep.lock();
+    Q_ASSERT(c);
+    removeCreep(c);
+    cleanUpBullets(c);
+    m_player->addKilled();
 }
 
 void Engine::draw(QPainter* p) const
@@ -87,17 +101,18 @@ void Engine::pause()
 void Engine::init()
 {
     m_player->addGold(300);
-    emit message("Niveau 1!", "rats");
+    Q_EMIT message("Niveau 1!", "rats");
     m_compteur = 20;
 }
 
 void Engine::onTimerClick()
 {
-    if(m_compteur > 0 && (creeps().empty() || creeps().last()->coords().y() > 0.5))
+    if(m_compteur > 0 && (creeps().empty() || creeps().back().get()->coords().y() > 0.5))
     {
         Creep* c = createCreep(m_map->spawnPoint(), *(++m_map->pathBegin()), 1);
-        connect(c, SIGNAL(escaped()), this, SLOT(onCreepEscaped()));
-        connect(c, SIGNAL(dead()), this, SLOT(onCreepDied()));
+        //c->toDel().connect(boost::bind(&Engine::onCreepToDel, this, _1));
+        c->dead().connect(boost::bind(&Engine::onCreepDied, this, _1));
+        c->escaped().connect(boost::bind(&Engine::onCreepEscaped, this, _1));
         m_compteur--;
     }
 
@@ -107,29 +122,5 @@ void Engine::onTimerClick()
 
     TowerHandler::maj();
 
-    emit updated();
-}
-
-void Engine::onCreepEscaped()
-{
-    Creep* c = qobject_cast<Creep*>(sender());
-    Q_ASSERT(c);
-    removeCreep(c);
-    cleanUpBullets(c);
-    m_player->addEscaped();
-}
-
-void Engine::onCreepDied()
-{
-    Creep* c = qobject_cast<Creep*>(sender());
-    Q_ASSERT(c);
-    removeCreep(c);
-    cleanUpBullets(c);
-    m_player->addKilled();
-}
-
-void Engine::onBulletHit()
-{
-    Bullet* b = qobject_cast<Bullet*>(sender());
-    removeBullet(b);
+    Q_EMIT updated();
 }

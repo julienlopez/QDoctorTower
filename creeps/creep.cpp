@@ -17,6 +17,12 @@ Creep::Creep(const QPointF& coords): Moving<QPointF>(coords)
     m_vieMax = 0;
 }
 
+#include <QDebug>
+Creep::~Creep() throw()
+{
+    qDebug() << "destruction creep " << (long)this;
+}
+
 void Creep::update(double dt)
 {
     QVector2D reste(m_goal - coords());
@@ -28,7 +34,7 @@ void Creep::update(double dt)
         }
         catch(Engine::AucunPointSuivant& ex)
         {
-            emit escaped();
+            m_escaped(shared_from_this());
         }
 
         return;
@@ -75,8 +81,18 @@ void Creep::hit(quint32 degats)
     if(degats >= m_vie)
     {
         m_vie = 0;
-        emit dead();
+        m_dead(shared_from_this());
         return;
     }
     m_vie -= degats;
+}
+
+Creep::type_signal_creep& Creep::dead()
+{
+    return m_dead;
+}
+
+Creep::type_signal_creep& Creep::escaped()
+{
+    return m_escaped;
 }

@@ -2,7 +2,6 @@
 #define CREEPHANDLER_HPP
 
 #include "iengine.hpp"
-#include "utils/list.hpp"
 
 #include <QtGlobal>
 
@@ -15,9 +14,11 @@ public:
 
     CreepHandler();
 
+    void removeCreep(wp_creep c);
+
 protected:
 
-    virtual Creep* closestCreep(const QPointF& p) const;
+    virtual sp_creep closestCreep(const QPointF& p) const;
 
     Creep* createCreep(const QPoint& spawn, const QPoint &goal, quint32 level);
 
@@ -26,8 +27,6 @@ protected:
     virtual type_liste_creep& creeps();
 
     void maj();
-
-    void removeCreep(Creep* c);
 
     void drawCreeps(QPainter* p) const;
 

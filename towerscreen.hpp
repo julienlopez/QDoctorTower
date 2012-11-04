@@ -9,10 +9,10 @@ class TowerScreen : public QWidget
 public:
     explicit TowerScreen(QWidget *parent = 0);
 
-signals:
+Q_SIGNALS:
     void changeEtat(quint8 type);
 
-public slots:
+public Q_SLOTS:
 
 };
 

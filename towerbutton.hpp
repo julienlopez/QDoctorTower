@@ -13,10 +13,10 @@ private:
     quint8 m_towerType;
     QString m_icone;
 
-signals:
+Q_SIGNALS:
     void changeEtat(quint8 type);
 
-private slots:
+private Q_SLOTS:
     void onClick();
 };
 

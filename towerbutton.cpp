@@ -12,5 +12,5 @@ TowerButton::TowerButton(quint8 towerType, QString icone, QWidget *parent) :
 
 void TowerButton::onClick()
 {
-    emit changeEtat(m_towerType);
+    Q_EMIT changeEtat(m_towerType);
 }

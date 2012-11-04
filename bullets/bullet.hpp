@@ -3,31 +3,35 @@
 
 #include <utils/moving.hpp>
 #include <utils/drawable.hpp>
+#include <utils/todelsender.hpp>
 
-#include <QObject>
+#include <boost/shared_ptr.hpp>
+
 #include <QPointF>
 
 class Creep;
 
-class Bullet : public QObject, public Moving<QPointF>, public Drawable
+class Bullet : public Moving<QPointF>, public Drawable, public ToDelSender<Bullet>
 {
-    Q_OBJECT
 public:
-    explicit Bullet(const QPointF& coords, Creep* cible, quint32 degats, QObject *parent = 0);
+    typedef boost::weak_ptr<Creep> wp_creep;
+    typedef boost::shared_ptr<Creep> sp_creep;
 
-    Creep* cible();
+    explicit Bullet(const QPointF& coords, wp_creep cible, quint32 degats);
 
-    const Creep* cible() const;
+    virtual ~Bullet();
 
-public slots:
+    wp_creep cible();
+
+    wp_creep cible() const;
+
+    void clearCible();
+
     void onHit();
-
-signals:
-    void hasHit();
 
 private:
     quint32 m_degats;
-    Creep* m_cible;
+    wp_creep m_cible;
 };
 
 #endif // BULLET_HPP

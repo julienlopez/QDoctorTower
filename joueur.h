@@ -18,12 +18,12 @@ public:
     void addEscaped(quint32 nb = 1);
     void addKilled(quint32 nb = 1);
 
-public slots:
+public	Q_SLOTS:
     void addGold(quint32 qtt);
     void retrieveGold(quint32 qtt) throw(std::invalid_argument);
     void setPseudo(QString pseudo);
 
-signals:
+Q_SIGNALS:
     void pseudoChanged(QString);
     void goldChanged(int);
     void nbEscapedChanged(int);
