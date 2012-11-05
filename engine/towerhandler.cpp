@@ -22,7 +22,7 @@ void TowerHandler::maj()
             wp_creep creep = a->cible();
             sp_creep c = creep.lock();
             if(c.get() && a->isCreepInRange(c)) //gestion de la cible sortant de la zone de portée
-                a->setCible(sp_creep());
+                a->setCible(c);
             else //si pas de cible, on en cherche une nouvelle
             {
                 c = closestCreep(a->coords());
