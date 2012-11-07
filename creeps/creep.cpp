@@ -17,11 +17,8 @@ Creep::Creep(const QPointF& coords): Moving<QPointF>(coords)
     m_vieMax = 0;
 }
 
-#include <QDebug>
 Creep::~Creep() throw()
-{
-    qDebug() << "destruction creep " << (long)this;
-}
+{}
 
 void Creep::update(double dt)
 {
@@ -52,6 +49,11 @@ void Creep::setVieMax(quint32 viemax)
 {
     m_vieMax = viemax;
     m_vie = viemax;
+}
+
+void Creep::setReward(quint32 reward)
+{
+    m_reward = reward;
 }
 
 void Creep::setGoal(const QPoint& goal)
@@ -95,4 +97,9 @@ Creep::type_signal_creep& Creep::dead()
 Creep::type_signal_creep& Creep::escaped()
 {
     return m_escaped;
+}
+
+quint32 Creep::reward() const
+{
+    return m_reward;
 }

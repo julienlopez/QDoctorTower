@@ -20,7 +20,7 @@ protected:
 
     virtual sp_creep closestCreep(const QPointF& p) const;
 
-    Creep* createCreep(const QPoint& spawn, const QPoint &goal, quint32 level);
+    Creep* createCreep(const QPoint& spawn, const QPoint &goal);
 
     virtual const type_liste_creep& creeps() const;
 
@@ -30,7 +30,10 @@ protected:
 
     void drawCreeps(QPainter* p) const;
 
+    void setCurrentCreepToCreate(quint8 cctc);
+
 private:
+    quint8 m_currentCreepToCreate;
     type_liste_creep m_creeps;
 };
 

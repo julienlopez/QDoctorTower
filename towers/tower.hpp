@@ -11,7 +11,7 @@ class Tile;
 class Tower : public HasCoords<QPoint>, public Updateable
 {
 public:
-    Tower(const QPoint& p);
+    Tower(const QPoint& p, quint32 cost);
 
     virtual bool canGoOnWater() const =0;
 
@@ -23,7 +23,10 @@ public:
 
     virtual bool canTarget() const = 0;
 
+    quint32 cost() const;
+
 private:
+    quint32 m_cost;
     const Tile* m_tile;
 };
 

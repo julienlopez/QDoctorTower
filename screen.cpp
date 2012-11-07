@@ -115,7 +115,14 @@ void Screen::mouseReleaseEvent(QMouseEvent* evt)
     if(m_mousePos.x() >= m_map->largeur() || m_mousePos.y() >= m_map->hauteur()) return;
     Tower* tower = TowerFactory::createTower(m_currentTowerState, m_mousePos);
     Q_ASSERT(tower);
-    Tile* tile = (*m_map)(m_mousePos.x(), m_mousePos.y());
-    Q_ASSERT(tile);
-    tile->addTower(tower);
+    try
+    {
+        Engine::instance()->buildTower(tower, m_mousePos.x(), m_mousePos.y());
+    }
+    catch(Exception::NotEnoughGold& ex)
+    {
+        onEngineMessage("Not enough gold", ex.message());
+        m_currentMessage.compteur = 20;
+    }
+
 }

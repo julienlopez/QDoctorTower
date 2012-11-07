@@ -1,6 +1,6 @@
 #include "tower.hpp"
 
-Tower::Tower(const QPoint& p): HasCoords<QPoint>(p), m_tile(0)
+Tower::Tower(const QPoint& p, quint32 cost): HasCoords<QPoint>(p), m_cost(cost), m_tile(0)
 {}
 
 const Tile* Tower::tile() const
@@ -11,4 +11,9 @@ const Tile* Tower::tile() const
 void Tower::setTile(const Tile* tile)
 {
     m_tile = tile;
+}
+
+quint32 Tower::cost() const
+{
+    return m_cost;
 }

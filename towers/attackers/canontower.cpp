@@ -6,7 +6,7 @@ const quint8 CanonTower::s_idType = 2;
 const QString CanonTower::s_icone = TowerFactory::prefixeIcones()+"canon_tower.png";
 
 
-CanonTower::CanonTower(const QPoint& p): Attacker(p)
+CanonTower::CanonTower(const QPoint& p): Attacker(p, 100)
 {}
 
 bool CanonTower::canGoOnWater() const

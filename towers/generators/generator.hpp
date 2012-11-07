@@ -6,7 +6,7 @@
 class Generator : public Tower
 {
 public:
-    Generator(const QPoint& p);
+    Generator(const QPoint& p, quint32 cost);
 };
 
 #endif // GENERATOR_HPP

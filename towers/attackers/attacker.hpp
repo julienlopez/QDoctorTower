@@ -9,7 +9,7 @@ class Attacker : public Tower
 public:
     typedef boost::weak_ptr<Creep> wp_creep;
 
-    Attacker(const QPoint& p);
+    Attacker(const QPoint& p, quint32 cost);
 
     virtual void update(double dt);
 

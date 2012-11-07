@@ -7,7 +7,7 @@ const quint8 ArrowTower::s_idType = 1;
 
 const QString ArrowTower::s_icone = TowerFactory::prefixeIcones()+"arrow_tower.png";
 
-ArrowTower::ArrowTower(const QPoint& p): Attacker(p)
+ArrowTower::ArrowTower(const QPoint& p): Attacker(p, 50)
 {
     setPortee(5);
     setTempsRecharge(0.5);

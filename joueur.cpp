@@ -38,6 +38,8 @@ void Joueur::addGold(quint32 qtt)
 void Joueur::retrieveGold(quint32 qtt) throw(std::invalid_argument)
 {
     if(qtt > m_gold) throw std::invalid_argument((QString::number(qtt)+" > "+QString::number(m_gold)).toStdString());
+    m_gold -= qtt;
+    Q_EMIT goldChanged(m_gold);
 }
 
 void Joueur::setPseudo(QString pseudo)

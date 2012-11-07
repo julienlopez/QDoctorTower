@@ -5,7 +5,7 @@
 
 #include <QVector2D>
 
-Attacker::Attacker(const QPoint& p): Tower(p)
+Attacker::Attacker(const QPoint& p, quint32 cost): Tower(p, cost)
 {
     m_tempsRecharge = 0;
     m_portee = 0;

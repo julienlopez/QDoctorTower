@@ -5,26 +5,28 @@
 #include "defaultfactoryerrorpolicy.hpp"
 
 #include <map>
+#include <list>
 
 class QPoint;
 class QPointF;
 
-template<	class AbstractProduct,
-			class IdentifierType,
-			class ProductCreator = AbstractProduct*(*)(),
-			template<typename, class> class FactoryErrorPolicy = DefaultFactoryErrorPolicy
-			>
+template<   class AbstractProduct,
+            class IdentifierType,
+            class ProductCreator = AbstractProduct*(*)(),
+            template<typename, class> class FactoryErrorPolicy = DefaultFactoryErrorPolicy
+            >
 class Factory : public FactoryErrorPolicy<IdentifierType, AbstractProduct>, public Singleton<Factory<AbstractProduct, IdentifierType, ProductCreator, FactoryErrorPolicy> >
 {
 public:
     typedef FactoryErrorPolicy<IdentifierType, AbstractProduct> error_policy;
+    typedef std::list<AbstractProduct*> type_list;
 
     AbstractProduct* create(typename ParameterTrait<IdentifierType>::const_reference id)
-	{
-		typename AssocMap::const_iterator i = m_associations.find(id);
+    {
+        typename AssocMap::const_iterator i = m_associations.find(id);
         if(i != m_associations.end()) return (i->second)();
         return onUnknownType(id);
-	}
+    }
 
     AbstractProduct* create(typename ParameterTrait<IdentifierType>::const_reference id, const QPoint& p)
     {
@@ -41,20 +43,28 @@ public:
         if(i != m_associations.end()) return (i->second)(p);
         return onUnknownType(id);
     }
-	
+
     bool registerProduct(typename ParameterTrait<IdentifierType>::const_reference id, ProductCreator creator)
-	{
+    {
         return m_associations.insert(typename AssocMap::value_type(id, creator)).second;
-	}
-	
+    }
+
     bool unregisterProduct(typename ParameterTrait<IdentifierType>::const_reference id)
-	{
-		return m_associations.erase(id) == 1;
-	}
-	
+    {
+        return m_associations.erase(id) == 1;
+    }
+
+    type_list instanciateOneOfEach()
+    {
+        type_list res;
+        for(typename AssocMap::const_iterator i = m_associations.begin(); i != m_associations.end(); ++i)
+            res.push_back((i->second)());
+        return res;
+    }
+
 private:
     typedef std::map<IdentifierType, ProductCreator> AssocMap;
-	AssocMap m_associations;
+    AssocMap m_associations;
 };
 
 #endif

@@ -8,11 +8,8 @@ Bullet::Bullet(const QPointF& coords, wp_creep cible, quint32 degats) :
     m_cible = cible;
 }
 
-#include <QDebug>
 Bullet::~Bullet()
-{
-    qDebug() << "destruction bullet " << (long)this; // << " => " << (long)cible().get();
-}
+{}
 
 Bullet::wp_creep Bullet::cible()
 {

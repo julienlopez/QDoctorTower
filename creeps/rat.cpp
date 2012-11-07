@@ -7,6 +7,12 @@ Rat::Rat(const QPointF& p): Creep(p)
 {
     setVitesse(0.5);
     setVieMax(50); //20);
+    setReward(1);
+}
+
+std::string Rat::label() const
+{
+    return "Rats";
 }
 
 namespace {

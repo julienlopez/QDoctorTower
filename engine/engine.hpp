@@ -4,8 +4,8 @@
 #include "creephandler.hpp"
 #include "towerhandler.hpp"
 #include "bullethandler.hpp"
-
-#include <utils/exception.hpp>
+#include "gameturn/statemachine.hpp"
+#include <utils/exceptions/notenoughgold.hpp>
 
 #include <QObject>
 #include <QPoint>
@@ -19,10 +19,10 @@ class Engine : public QObject, public CreepHandler, public TowerHandler, public 
     Q_OBJECT
 public:
 
-    class AucunPointSuivant : public Exception
+    class AucunPointSuivant : public Exception::Exception
     {
     public:
-        AucunPointSuivant(): Exception("Aucun point suivant")
+        AucunPointSuivant(): Exception::Exception("Aucun point suivant")
         {}
     };
 
@@ -37,6 +37,8 @@ public:
     virtual const type_liste_creep& creeps() const;
 
     void draw(QPainter* p) const;
+
+    void buildTower(Tower* tower, quint8 x, quint8 y) throw(Exception::NotEnoughGold);
 
 protected:
     virtual sp_creep closestCreep(const QPointF& p) const;
@@ -57,18 +59,22 @@ public Q_SLOTS:
     void pause();
 
 private:
-    bool m_started;
+    GameTurn::StateMachine m_gameturnSM;
     quint8 m_compteur;
     Joueur* m_player;
     Map* m_map;
     QTimer* m_timer;
+    QTimer* m_timerCreepSpawn;
 
-    void init();
+    quint8 m_nbCreepToSpawn;
 
     static Engine* s_instance;
 
 private Q_SLOTS:
     void onTimerClick();
+    void onNewGameTurn();
+    void onTimerCreepSpawnClick();
+    void onGameTurnSMFinished();
 };
 
 #endif // ENGINE_H

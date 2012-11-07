@@ -5,7 +5,9 @@
 #include <QPainter>
 
 CreepHandler::CreepHandler()
-{}
+{
+    m_currentCreepToCreate = 0;
+}
 
 namespace {
 struct DistCreep {
@@ -37,9 +39,9 @@ CreepHandler::sp_creep CreepHandler::closestCreep(const QPointF& p) const
     return dc.creep;
 }
 
-Creep* CreepHandler::createCreep(const QPoint &spawn, const QPoint &goal, quint32 level)
+Creep* CreepHandler::createCreep(const QPoint &spawn, const QPoint &goal)
 {
-    Creep* c = CreepFactory::createCreep(level, spawn);
+    Creep* c = CreepFactory::createCreep(m_currentCreepToCreate, spawn);
     c->setGoal(goal);
     m_creeps.push_back(sp_creep(c));
     return c;
@@ -79,4 +81,9 @@ void CreepHandler::drawCreeps(QPainter* p) const
 {
     p->setPen(Qt::black);
     Q_FOREACH(sp_creep c, m_creeps) if(c) c->draw(p);
+}
+
+void CreepHandler::setCurrentCreepToCreate(quint8 cctc)
+{
+    m_currentCreepToCreate = cctc;
 }

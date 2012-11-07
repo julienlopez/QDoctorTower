@@ -28,7 +28,7 @@ SOURCES += main.cpp\
     engine/engine.cpp \
     creeps/creepfactory.cpp \
     creeps/rat.cpp \
-    utils/exception.cpp \
+    utils/exceptions/exception.cpp \
     towers/attackers/arrowtower.cpp \
     bullets/bullet.cpp \
     towerscreen.cpp \
@@ -37,7 +37,10 @@ SOURCES += main.cpp\
     towers/attackers/canontower.cpp \
     engine/creephandler.cpp \
     engine/towerhandler.cpp \
-    engine/bullethandler.cpp
+    engine/bullethandler.cpp \
+    utils/exceptions/notenoughgold.cpp \
+    gameturn/statemachine.cpp \
+    gameturn/state.cpp 
 
 HEADERS  += \
     tiles/tile.hpp \
@@ -63,7 +66,7 @@ HEADERS  += \
     creeps/rat.hpp \
     utils/hascoords.hpp \
     utils/randomgenerator.hpp \
-    utils/exception.hpp \
+    utils/exceptions/exception.hpp \
     towers/attackers/arrowtower.hpp \
     bullets/bullet.hpp \
     towerscreen.hpp \
@@ -78,4 +81,7 @@ HEADERS  += \
     engine/iengine.hpp \
     engine/bullethandler.hpp \
     utils/todelsender.hpp \
-    utils/predicates.hpp
+    utils/predicates.hpp \
+    utils/exceptions/notenoughgold.hpp \
+    gameturn/statemachine.hpp \
+    gameturn/state.hpp 
