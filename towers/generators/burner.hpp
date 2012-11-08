@@ -1,24 +1,23 @@
-#ifndef CANONTOWER_HPP
-#define CANONTOWER_HPP
+#ifndef BURNER_HPP
+#define BURNER_HPP
 
-#include "attacker.hpp"
+#include "generator.hpp"
 
-class CanonTower : public Attacker
+class Burner : public Generator
 {
 public:
-    explicit CanonTower(const QPoint& p);
+    Burner(const QPoint& p);
 
     virtual bool canGoOnWater() const;
 
-    virtual void tirer();
-
     virtual const QString& icone() const;
+
+    virtual quint32 produceEnergy();
 
     static const quint8 s_idType;
     static const bool s_registered;
 
     static const QString s_icone;
-
 };
 
-#endif // CANONTOWER_HPP
+#endif // BURNER_HPP

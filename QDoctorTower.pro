@@ -40,7 +40,12 @@ SOURCES += main.cpp\
     engine/bullethandler.cpp \
     utils/exceptions/notenoughgold.cpp \
     gameturn/statemachine.cpp \
-    gameturn/state.cpp 
+    gameturn/state.cpp \ 
+    towers/generators/burner.cpp \
+    utils/hasrechargetime.cpp \
+    engine/networkhandler.cpp \
+    engine/networkhandlerimpl/networkhandlerimplbasique.cpp \
+    towers/energyhandler.cpp
 
 HEADERS  += \
     tiles/tile.hpp \
@@ -84,4 +89,9 @@ HEADERS  += \
     utils/predicates.hpp \
     utils/exceptions/notenoughgold.hpp \
     gameturn/statemachine.hpp \
-    gameturn/state.hpp 
+    gameturn/state.hpp \ 
+    towers/generators/burner.hpp \
+    utils/hasrechargetime.hpp \
+    engine/networkhandler.hpp \
+    engine/networkhandlerimpl/networkhandlerimplbasique.hpp \
+    towers/energyhandler.hpp

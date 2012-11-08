@@ -106,6 +106,7 @@ void Engine::buildTower(Tower* tower, quint8 x, quint8 y) throw(Exception::NotEn
     Tile* tile = (*m_map)(x, y);
     Q_ASSERT(tile);
     tile->addTower(tower);
+    NetworkHandler::addTowerToNetwork(tower, x, y);
 }
 
 #include <QDebug>
@@ -139,6 +140,8 @@ void Engine::onTimerClick()
     CreepHandler::maj();
 
     TowerHandler::maj();
+
+    NetworkHandler::update(dt());
 
     Q_EMIT updated();
 }

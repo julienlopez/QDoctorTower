@@ -1,6 +1,7 @@
 #ifndef TOWER_HPP
 #define TOWER_HPP
 
+#include "energyhandler.hpp"
 #include <utils/hascoords.hpp>
 #include <utils/updateable.hpp>
 
@@ -8,7 +9,9 @@
 
 class Tile;
 
-class Tower : public HasCoords<QPoint>, public Updateable
+class QString;
+
+class Tower : public HasCoords<QPoint>, public EnergyHandler, public Updateable
 {
 public:
     Tower(const QPoint& p, quint32 cost);
@@ -19,7 +22,7 @@ public:
 
     void setTile(const Tile* tile);
 
-    virtual QString icone() const =0;
+    virtual const QString& icone() const =0;
 
     virtual bool canTarget() const = 0;
 

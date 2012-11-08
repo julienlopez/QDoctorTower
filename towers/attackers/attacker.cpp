@@ -5,36 +5,22 @@
 
 #include <QVector2D>
 
-Attacker::Attacker(const QPoint& p, quint32 cost): Tower(p, cost)
-{
-    m_tempsRecharge = 0;
-    m_portee = 0;
-    m_compteurRecharge = 0;
-}
+Attacker::Attacker(const QPoint& p, quint32 cost): Tower(p, cost), m_portee(0)
+{}
 
 void Attacker::update(double dt)
 {
-    if(m_compteurRecharge < m_tempsRecharge) m_compteurRecharge += dt;
-    if(!m_cible.expired() && m_compteurRecharge >= m_tempsRecharge)
+    if(rechargeCounter() < rechargeTime()) addToRechargeCounter(dt);
+    if(!m_cible.expired() && rechargeCounter() >= rechargeTime())
     {
         tirer();
-        m_compteurRecharge -= m_tempsRecharge;
+        useRechargeTime();
     }
-}
-
-double Attacker::tempsRecharge() const
-{
-    return m_tempsRecharge;
 }
 
 double Attacker::portee() const
 {
     return m_portee;
-}
-
-double Attacker::compteurRecharge() const
-{
-    return m_compteurRecharge;
 }
 
 Attacker::wp_creep Attacker::cible() const
@@ -66,17 +52,7 @@ bool Attacker::isCreepInRange(wp_creep creep) const
     return QVector2D(c->coords()-coords()).lengthSquared() <= pow(portee(),2);
 }
 
-void Attacker::setTempsRecharge(double t)
-{
-    m_tempsRecharge = t;
-}
-
 void Attacker::setPortee(double t)
 {
     m_portee = t;
-}
-
-void Attacker::setCompteurRecharge(double d)
-{
-    m_compteurRecharge = d;
 }

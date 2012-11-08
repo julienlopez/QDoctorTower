@@ -1,10 +1,11 @@
 #ifndef ATTACKER_HPP
 #define ATTACKER_HPP
 
+#include <utils/hasrechargetime.hpp>
 #include <creeps/creep.h>
 #include <towers/tower.hpp>
 
-class Attacker : public Tower
+class Attacker : public Tower, protected HasRechargeTime
 {
 public:
     typedef boost::weak_ptr<Creep> wp_creep;
@@ -13,11 +14,7 @@ public:
 
     virtual void update(double dt);
 
-    double tempsRecharge() const;
-
     double portee() const;
-
-    double compteurRecharge() const;
 
     wp_creep cible() const;
 
@@ -30,16 +27,10 @@ public:
     bool isCreepInRange(wp_creep creep) const;
 
 protected:
-    void setTempsRecharge(double t);
-
     void setPortee(double t);
 
-    void setCompteurRecharge(double d);
-
 private:
-    double m_tempsRecharge;
     double m_portee;
-    double m_compteurRecharge;
     wp_creep m_cible;
 };
 

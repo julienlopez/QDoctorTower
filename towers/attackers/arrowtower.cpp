@@ -10,7 +10,7 @@ const QString ArrowTower::s_icone = TowerFactory::prefixeIcones()+"arrow_tower.p
 ArrowTower::ArrowTower(const QPoint& p): Attacker(p, 50)
 {
     setPortee(5);
-    setTempsRecharge(0.5);
+    setRechargeTime(0.5);
 }
 
 bool ArrowTower::canGoOnWater() const
@@ -23,7 +23,7 @@ void ArrowTower::tirer()
     Engine::instance()->addBullet(Engine::sp_bullet(new Fleche(coords(), cible())));
 }
 
-QString ArrowTower::icone() const
+const QString& ArrowTower::icone() const
 {
     return s_icone;
 }

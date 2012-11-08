@@ -30,6 +30,20 @@ void Tile::draw(QPainter *painter, const QColor& couleur) const
     {
         QString str = m_tower->icone();
         QPixmap p(str);
-        painter->drawPixmap(QRect(coords(), QSize(1,1)), p);
+        QRect square(coords(), QSize(1,1));
+        painter->drawPixmap(square, p);
+        if(m_tower->hasEnergy())
+        {
+
+            painter->setBrush(QColor(50,50,50));
+            QRectF full(square);
+            full.adjust(0, 0.9, 0, 0);
+            painter->drawRect(full);
+
+            painter->setBrush(QColor(200,50,200));
+            double ratio = (double)m_tower->energy()/m_tower->energyMax();
+            full.adjust(0, 0, ratio-1, 0);
+            painter->drawRect(full);
+        }
     }
 }

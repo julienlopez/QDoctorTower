@@ -4,6 +4,7 @@
 #include "creephandler.hpp"
 #include "towerhandler.hpp"
 #include "bullethandler.hpp"
+#include "networkhandler.hpp"
 #include "gameturn/statemachine.hpp"
 #include <utils/exceptions/notenoughgold.hpp>
 
@@ -14,7 +15,7 @@ class Joueur;
 class Map;
 class QTimer;
 
-class Engine : public QObject, public CreepHandler, public TowerHandler, public BulletHandler
+class Engine : public QObject, public CreepHandler, public TowerHandler, public BulletHandler, private NetworkHandler
 {
     Q_OBJECT
 public:

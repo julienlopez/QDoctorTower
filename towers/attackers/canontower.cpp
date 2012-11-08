@@ -19,7 +19,7 @@ void CanonTower::tirer()
 
 }
 
-QString CanonTower::icone() const
+const QString& CanonTower::icone() const
 {
     return s_icone;
 }
