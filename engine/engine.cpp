@@ -96,6 +96,7 @@ void Engine::draw(QPainter* p) const
 {
     drawCreeps(p);
     drawBullets(p);
+    NetworkHandler::draw(p);
 }
 
 void Engine::buildTower(Tower* tower, quint8 x, quint8 y) throw(Exception::NotEnoughGold)

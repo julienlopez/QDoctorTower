@@ -1,7 +1,7 @@
 #ifndef ENERGYHANDLER_HPP
 #define ENERGYHANDLER_HPP
 
-#include <QtGlobal>
+#include <stdexcept>
 
 class EnergyHandler
 {
@@ -10,28 +10,30 @@ public:
 
     bool hasEnergy() const;
 
-    quint32 energy() const;
+    double energy() const;
 
-    quint32 energyMax() const;
+    double energyMax() const;
 
-    void addEnergy(quint32 de);
+    void addEnergy(double de);
 
-    quint32 energyInputMax() const;
+    void subtractEnergy(double de) throw(std::invalid_argument);
 
-    quint32 energyOutputMax() const;
+    double energyInputMax() const;
+
+    double energyOutputMax() const;
 
 protected:
-    void setEnergyMax(quint32 energyMax);
+    void setEnergyMax(double energyMax);
 
-    void setEnergyInputMax(quint32 energyInputMax);
+    void setEnergyInputMax(double energyInputMax);
 
-    void setEnergyOutputMax(quint32 energyOutputMax);
+    void setEnergyOutputMax(double energyOutputMax);
 
 private:
-    quint32 m_energy;
-    quint32 m_energyMax;
-    quint32 m_energyInputMax;
-    quint32 m_energyOutputMax;
+    double m_energy;
+    double m_energyMax;
+    double m_energyInputMax;
+    double m_energyOutputMax;
 };
 
 #endif // ENERGYHANDLER_HPP

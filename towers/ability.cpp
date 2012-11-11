@@ -12,3 +12,8 @@ void Ability::update(double dt)
         useRechargeTime();
     }
 }
+
+void Ability::setCondition(type_fct_condition c)
+{
+    m_condition = c;
+}

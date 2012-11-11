@@ -7,13 +7,13 @@
 class Generator : public Tower, protected HasRechargeTime
 {
 public:
-    Generator(const QPoint& p, quint32 cost, quint32 energyMax);
+    Generator(const QPoint& p, quint32 cost, double energyMax);
 
     virtual bool canTarget() const;
 
     virtual void update(double dt);
 
-    virtual quint32 produceEnergy() =0;
+    virtual double produceEnergy() =0;
 };
 
 #endif // GENERATOR_HPP

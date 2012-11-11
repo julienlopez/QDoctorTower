@@ -31,12 +31,12 @@ protected:
 
     Ability& abilityTirer();
 
+    virtual bool canFire() const;
+
 private:
     double m_portee;
     wp_creep m_cible;
     Ability m_tirer;
-
-    bool estCibleValide() const;
 };
 
 #endif // ATTACKER_HPP

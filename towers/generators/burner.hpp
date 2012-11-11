@@ -12,7 +12,7 @@ public:
 
     virtual const QString& icone() const;
 
-    virtual quint32 produceEnergy();
+    virtual double produceEnergy();
 
     static const quint8 s_idType;
     static const bool s_registered;

@@ -26,6 +26,17 @@ public:
     typedef std::list<Vertex> type_list_vertex;
     typedef std::map<Vertex, std::list<Vertex> > type_map_link_to;
 
+    struct Connection
+    {
+        Connection(const Vertex& _from, const Vertex& _to, quint32 _capacity): from(_from), to(_to), capacity(_capacity)
+        {}
+
+        Vertex from;
+        Vertex to;
+        quint32 capacity;
+    };
+    typedef std::list<Connection> type_list_connections;
+
     NetworkHandlerImplBasique();
 
     void addTowerToNetwork(Tower* tower, quint8 x, quint8 y);
@@ -36,6 +47,14 @@ public:
 
 private:
     type_list_vertex m_vertexes;
+    type_list_connections m_connections;
+    type_list_connections m_effectiveConnections;
+
+    void updateConnections();
+
+    bool testEffectiveConnectionsAreValid();
+
+    void applyEffectiveConnections(double dt);
 };
 
 #endif // NETWORKHANDLERIMPLBASIQUE_HPP

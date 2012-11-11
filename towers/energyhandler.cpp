@@ -8,43 +8,49 @@ bool EnergyHandler::hasEnergy() const
     return m_energyMax > 0;
 }
 
-quint32 EnergyHandler::energy() const
+double EnergyHandler::energy() const
 {
     return m_energy;
 }
 
-quint32 EnergyHandler::energyMax() const
+double EnergyHandler::energyMax() const
 {
     return m_energyMax;
 }
 
-void EnergyHandler::setEnergyMax(quint32 energyMax)
+void EnergyHandler::setEnergyMax(double energyMax)
 {
     m_energyMax = energyMax;
 }
 
-void EnergyHandler::addEnergy(quint32 de)
+void EnergyHandler::addEnergy(double de)
 {
     m_energy += de;
     if(m_energy > m_energyMax) m_energy = m_energyMax;
 }
 
-quint32 EnergyHandler::energyInputMax() const
+void EnergyHandler::subtractEnergy(double de) throw(std::invalid_argument)
+{
+    if(m_energy < de) throw std::invalid_argument("Not enough energy");
+    m_energy -= de;
+}
+
+double EnergyHandler::energyInputMax() const
 {
     return m_energyInputMax;
 }
 
-quint32 EnergyHandler::energyOutputMax() const
+double EnergyHandler::energyOutputMax() const
 {
     return m_energyOutputMax;
 }
 
-void EnergyHandler::setEnergyInputMax(quint32 energyInputMax)
+void EnergyHandler::setEnergyInputMax(double energyInputMax)
 {
     m_energyInputMax = energyInputMax;
 }
 
-void EnergyHandler::setEnergyOutputMax(quint32 energyOutputMax)
+void EnergyHandler::setEnergyOutputMax(double energyOutputMax)
 {
     m_energyOutputMax = energyOutputMax;
 }

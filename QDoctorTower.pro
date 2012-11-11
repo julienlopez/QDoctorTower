@@ -46,7 +46,9 @@ SOURCES += main.cpp\
     engine/networkhandler.cpp \
     engine/networkhandlerimpl/networkhandlerimplbasique.cpp \
     towers/energyhandler.cpp \
-    towers/ability.cpp
+    towers/ability.cpp \
+    towers/attackers/blastertower.cpp \
+    bullets/blaster.cpp
 
 HEADERS  += \
     tiles/tile.hpp \
@@ -96,4 +98,6 @@ HEADERS  += \
     engine/networkhandler.hpp \
     engine/networkhandlerimpl/networkhandlerimplbasique.hpp \
     towers/energyhandler.hpp \
-    towers/ability.hpp
+    towers/ability.hpp \
+    towers/attackers/blastertower.hpp \
+    bullets/blaster.hpp

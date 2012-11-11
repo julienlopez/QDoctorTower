@@ -7,7 +7,7 @@ const QString Burner::s_icone = TowerFactory::prefixeIcones()+"burner.png";
 
 Burner::Burner(const QPoint& p): Generator(p, 20, 100)
 {
-    setEnergyOutputMax(2);
+    setEnergyOutputMax(10);
 }
 
 bool Burner::canGoOnWater() const
@@ -20,9 +20,9 @@ const QString& Burner::icone() const
     return s_icone;
 }
 
-quint32 Burner::produceEnergy()
+double Burner::produceEnergy()
 {
-    return 1;
+    return 5;
 }
 
 namespace

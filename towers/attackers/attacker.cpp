@@ -7,17 +7,11 @@
 
 #include <QVector2D>
 
-Attacker::Attacker(const QPoint& p, quint32 cost): Tower(p, cost), m_portee(0), m_tirer(boost::bind(&Attacker::tirer, this), boost::bind(&Attacker::estCibleValide, this))
+Attacker::Attacker(const QPoint& p, quint32 cost): Tower(p, cost), m_portee(0), m_tirer(boost::bind(&Attacker::tirer, this), boost::bind(&Attacker::canFire, this))
 {}
 
 void Attacker::update(double dt)
 {
-//    if(rechargeCounter() < rechargeTime()) addToRechargeCounter(dt);
-//    if(!m_cible.expired() && rechargeCounter() >= rechargeTime())
-//    {
-//        tirer();
-//        useRechargeTime();
-//    }
     m_tirer.update(dt);
 }
 
@@ -65,7 +59,7 @@ Ability& Attacker::abilityTirer()
     return m_tirer;
 }
 
-bool Attacker::estCibleValide() const
+bool Attacker::canFire() const
 {
     return !m_cible.expired();
 }

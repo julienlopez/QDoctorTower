@@ -1,6 +1,6 @@
 #include "generator.hpp"
 
-Generator::Generator(const QPoint& p, quint32 cost, quint32 energyMax): Tower(p, cost)
+Generator::Generator(const QPoint& p, quint32 cost, double energyMax): Tower(p, cost)
 {
     setEnergyMax(energyMax);
 }
@@ -15,7 +15,7 @@ void Generator::update(double dt)
     if(rechargeCounter() < rechargeTime()) addToRechargeCounter(dt);
     if(rechargeCounter() >= rechargeTime())
     {
-        addEnergy(produceEnergy());
+        addEnergy(dt*produceEnergy());
         useRechargeTime();
     }
 }

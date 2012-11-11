@@ -15,6 +15,8 @@ public:
 
     void update(double dt);
 
+    void setCondition(type_fct_condition c);
+
 private:
     type_fct_action m_action;
     type_fct_condition m_condition;
