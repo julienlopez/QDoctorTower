@@ -85,16 +85,16 @@ void Screen::mouseMoveEvent(QMouseEvent * evt)
     QRect geom = geometry();
     if(!geom.contains(evt->pos())) return;
 
-    qDebug() << "cursor pos: " << evt->pos() << " (" << geom.topLeft() << ")";
+    //qDebug() << "cursor pos: " << evt->pos() << " (" << geom.topLeft() << ")";
     QPoint pos = evt->pos() - geom.topLeft();
     double tailleCase = qMin((double)(width()-2)/m_map->largeur(), (double)(height()-2)/m_map->hauteur());
     double offsetX = width() - tailleCase*m_map->largeur();
     double offsetY = height() - tailleCase*m_map->hauteur();
-    qDebug() << "tailleCase: " << tailleCase;
-    qDebug() << "offsetX: " << offsetX;
-    qDebug() << "offsetY: " << offsetY;
+    //qDebug() << "tailleCase: " << tailleCase;
+    //qDebug() << "offsetX: " << offsetX;
+    //qDebug() << "offsetY: " << offsetY;
     QPoint mousePos((pos.x()-offsetX)/tailleCase, (pos.y()-offsetY)/tailleCase);
-    qDebug() << mousePos;
+    //qDebug() << mousePos;
 
     if(mousePos != m_mousePos)
     {
