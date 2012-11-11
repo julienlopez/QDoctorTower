@@ -7,7 +7,10 @@ const QString CanonTower::s_icone = TowerFactory::prefixeIcones()+"canon_tower.p
 
 
 CanonTower::CanonTower(const QPoint& p): Attacker(p, 100)
-{}
+{
+    setPortee(8);
+    abilityTirer().setRechargeTime(1.5);
+}
 
 bool CanonTower::canGoOnWater() const
 {

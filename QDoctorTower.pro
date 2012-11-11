@@ -45,7 +45,8 @@ SOURCES += main.cpp\
     utils/hasrechargetime.cpp \
     engine/networkhandler.cpp \
     engine/networkhandlerimpl/networkhandlerimplbasique.cpp \
-    towers/energyhandler.cpp
+    towers/energyhandler.cpp \
+    towers/ability.cpp
 
 HEADERS  += \
     tiles/tile.hpp \
@@ -94,4 +95,5 @@ HEADERS  += \
     utils/hasrechargetime.hpp \
     engine/networkhandler.hpp \
     engine/networkhandlerimpl/networkhandlerimplbasique.hpp \
-    towers/energyhandler.hpp
+    towers/energyhandler.hpp \
+    towers/ability.hpp

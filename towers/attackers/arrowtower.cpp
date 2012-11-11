@@ -10,7 +10,7 @@ const QString ArrowTower::s_icone = TowerFactory::prefixeIcones()+"arrow_tower.p
 ArrowTower::ArrowTower(const QPoint& p): Attacker(p, 50)
 {
     setPortee(5);
-    setRechargeTime(0.5);
+    abilityTirer().setRechargeTime(0.5);
 }
 
 bool ArrowTower::canGoOnWater() const

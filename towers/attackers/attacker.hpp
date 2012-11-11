@@ -1,11 +1,11 @@
 #ifndef ATTACKER_HPP
 #define ATTACKER_HPP
 
-#include <utils/hasrechargetime.hpp>
 #include <creeps/creep.h>
 #include <towers/tower.hpp>
+#include <towers/ability.hpp>
 
-class Attacker : public Tower, protected HasRechargeTime
+class Attacker : public Tower
 {
 public:
     typedef boost::weak_ptr<Creep> wp_creep;
@@ -29,9 +29,14 @@ public:
 protected:
     void setPortee(double t);
 
+    Ability& abilityTirer();
+
 private:
     double m_portee;
     wp_creep m_cible;
+    Ability m_tirer;
+
+    bool estCibleValide() const;
 };
 
 #endif // ATTACKER_HPP
