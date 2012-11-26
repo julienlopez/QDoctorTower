@@ -55,7 +55,7 @@ void Screen::paintEvent(QPaintEvent* evt)
 
     Engine::instance()->draw(&p);
 
-    if(m_currentTowerState != 0)
+    if(m_currentTowerState != 0 && m_mousePos.x() >= 0 && m_mousePos.x() < m_map->largeur() && m_mousePos.y() >= 0 && m_mousePos.y() < m_map->hauteur())
     {
         QPixmap pix(TowerFactory::icones()[m_currentTowerState]);
         p.drawPixmap(m_mousePos, pix, QRect(0, 0, 1, 1));
@@ -82,19 +82,12 @@ void Screen::mouseMoveEvent(QMouseEvent * evt)
 {
     if(m_currentTowerState == 0) return;
 
-    QRect geom = geometry();
-    if(!geom.contains(evt->pos())) return;
-
-    //qDebug() << "cursor pos: " << evt->pos() << " (" << geom.topLeft() << ")";
-    QPoint pos = evt->pos() - geom.topLeft();
+    QPoint pos = evt->pos();
     double tailleCase = qMin((double)(width()-2)/m_map->largeur(), (double)(height()-2)/m_map->hauteur());
-    double offsetX = width() - tailleCase*m_map->largeur();
-    double offsetY = height() - tailleCase*m_map->hauteur();
-    //qDebug() << "tailleCase: " << tailleCase;
-    //qDebug() << "offsetX: " << offsetX;
-    //qDebug() << "offsetY: " << offsetY;
+    double offsetX = (width() - tailleCase*m_map->largeur())/2;
+    double offsetY = (height() - tailleCase*m_map->hauteur())/2;
+
     QPoint mousePos((pos.x()-offsetX)/tailleCase, (pos.y()-offsetY)/tailleCase);
-    //qDebug() << mousePos;
 
     if(mousePos != m_mousePos)
     {
