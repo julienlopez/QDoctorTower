@@ -6,7 +6,10 @@
 class ArrowTower : public Attacker
 {
 public:
-    ArrowTower(const QPoint& p);
+
+    ArrowTower(const QPoint& p, double range = 5, double rechargeTime = 0.5, quint32 cost = 50);
+
+    void affecteValues(const ArrowTower* at);
 
     virtual bool canGoOnWater() const;
 
@@ -18,6 +21,17 @@ public:
     static const bool s_registered;
 
     static const QString s_icone;
+
+    virtual bool canLevelUp() const;
+
+    virtual void levelUp();
+
+    virtual std::string label() const;
+
+    typedef std::map<quint8, boost::shared_ptr<ArrowTower> > type_containr_levels;
+
+private:
+    static const type_containr_levels s_levels;
 };
 
 #endif // ARROWTOWER_HPP

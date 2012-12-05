@@ -27,6 +27,21 @@ const QString& CanonTower::icone() const
     return s_icone;
 }
 
+bool CanonTower::canLevelUp() const
+{
+    return false;
+}
+
+void CanonTower::levelUp()
+{
+
+}
+
+std::string CanonTower::label() const
+{
+    return "Cannon Tower";
+}
+
 namespace
 {
 Tower* createCanonTower(const QPoint& p) {

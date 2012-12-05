@@ -18,6 +18,12 @@ public:
     static const bool s_registered;
 
     static const QString s_icone;
+
+    virtual bool canLevelUp() const;
+
+    virtual void levelUp();
+
+    virtual std::string label() const;
 };
 
 #endif // BURNER_HPP

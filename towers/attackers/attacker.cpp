@@ -59,6 +59,11 @@ Ability& Attacker::abilityTirer()
     return m_tirer;
 }
 
+const Ability& Attacker::abilityTirer() const
+{
+    return m_tirer;
+}
+
 bool Attacker::canFire() const
 {
     return !m_cible.expired();

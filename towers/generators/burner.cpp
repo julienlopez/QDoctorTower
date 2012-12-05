@@ -25,6 +25,21 @@ double Burner::produceEnergy()
     return 5;
 }
 
+bool Burner::canLevelUp() const
+{
+    return false;
+}
+
+void Burner::levelUp()
+{
+
+}
+
+std::string Burner::label() const
+{
+    return "Burner";
+}
+
 namespace
 {
 Tower* createBurner(const QPoint& p) {

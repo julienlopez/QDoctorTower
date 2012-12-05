@@ -23,6 +23,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     TowerScreen* towerScreen = new TowerScreen;
     connect(towerScreen, SIGNAL(changeEtat(quint8)), m_screen, SLOT(setTowerState(quint8)));
+    connect(m_screen, SIGNAL(towerSelected(Tower*)), towerScreen, SLOT(onTowerSelected(Tower*)));
 
     QWidget* w = new QWidget;
     QVBoxLayout* layout = new QVBoxLayout();

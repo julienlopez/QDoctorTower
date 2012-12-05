@@ -80,8 +80,6 @@ void Screen::paintEvent(QPaintEvent* evt)
 
 void Screen::mouseMoveEvent(QMouseEvent * evt)
 {
-    if(m_currentTowerState == 0) return;
-
     QPoint pos = evt->pos();
     double tailleCase = qMin((double)(width()-2)/m_map->largeur(), (double)(height()-2)/m_map->hauteur());
     double offsetX = (width() - tailleCase*m_map->largeur())/2;
@@ -98,7 +96,6 @@ void Screen::mouseMoveEvent(QMouseEvent * evt)
 
 void Screen::mouseReleaseEvent(QMouseEvent* evt)
 {
-    if(m_currentTowerState == 0) return;
     if(evt->button() == Qt::RightButton)
     {
         m_currentTowerState = 0;
@@ -106,6 +103,15 @@ void Screen::mouseReleaseEvent(QMouseEvent* evt)
         return;
     }
     if(m_mousePos.x() >= m_map->largeur() || m_mousePos.y() >= m_map->hauteur()) return;
+
+
+    if(m_currentTowerState == 0) selectTower();
+    else createTower();
+
+}
+
+void Screen::createTower()
+{
     Tower* tower = TowerFactory::createTower(m_currentTowerState, m_mousePos);
     Q_ASSERT(tower);
     try
@@ -117,5 +123,12 @@ void Screen::mouseReleaseEvent(QMouseEvent* evt)
         onEngineMessage("Not enough gold", ex.message());
         m_currentMessage.compteur = 20;
     }
+}
 
+void Screen::selectTower()
+{
+    Tile* tile = (*m_map)(m_mousePos.x(), m_mousePos.y());
+    if(!tile) return;
+    Tower* t = tile->tower();
+    Q_EMIT towerSelected(t);
 }

@@ -8,11 +8,6 @@ const quint8 WaterTile::s_idType = 2;
 WaterTile::WaterTile(const QPoint& coords): Tile(coords)
 {}
 
-WaterTile* WaterTile::clone() const
-{
-    return new WaterTile(*this);
-}
-
 bool WaterTile::addTower(Tower* tower)
 {
     if(!tower || !tower->canGoOnWater() || hasTower()) return false;
@@ -20,6 +15,11 @@ bool WaterTile::addTower(Tower* tower)
     tower->setTile(this);
     Engine::instance()->addTower(tower);
     return true;
+}
+
+WaterTile* WaterTile::clone() const
+{
+    return new WaterTile(*this);
 }
 
 void WaterTile::draw(QPainter* painter) const

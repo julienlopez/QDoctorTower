@@ -8,9 +8,9 @@ class WaterTile : public Tile
 public:
     WaterTile(const QPoint& coords);
 
-    WaterTile* clone() const;
-
     virtual bool addTower(Tower* tower);
+
+    virtual WaterTile* clone() const;
 
     void draw(QPainter* painter) const;
 

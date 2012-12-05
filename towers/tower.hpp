@@ -28,8 +28,21 @@ public:
 
     quint32 cost() const;
 
+    virtual bool canLevelUp() const =0;
+
+    virtual void levelUp() =0;
+
+    virtual quint8 level() const;
+
+    virtual std::string label() const =0;
+
+protected:
+    void setLevel(quint8 level);
+    void setCost(quint32 cost);
+
 private:
     quint32 m_cost;
+    quint8 m_level;
     const Tile* m_tile;
 };
 

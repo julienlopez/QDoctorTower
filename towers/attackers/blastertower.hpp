@@ -19,6 +19,12 @@ public:
 
     static const QString s_icone;
 
+    virtual bool canLevelUp() const;
+
+    virtual void levelUp();
+
+    virtual std::string label() const;
+
 protected:
     virtual bool canFire() const;
 };

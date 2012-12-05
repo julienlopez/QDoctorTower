@@ -31,6 +31,8 @@ protected:
 
     Ability& abilityTirer();
 
+    const Ability& abilityTirer() const;
+
     virtual bool canFire() const;
 
 private:

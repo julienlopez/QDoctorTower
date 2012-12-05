@@ -4,6 +4,7 @@
 #include <QWidget>
 
 class Map;
+class Tower;
 
 class Screen : public QWidget
 {
@@ -24,6 +25,9 @@ public Q_SLOTS:
     void onEngineMessage(QString, QString);
     void setTowerState(quint8 state);
 
+Q_SIGNALS:
+    void towerSelected(Tower*);
+
 protected:
     void paintEvent(QPaintEvent* evt);
     void mouseMoveEvent(QMouseEvent* evt);
@@ -34,6 +38,10 @@ private:
     Map* m_map;
     quint8 m_currentTowerState;
     QPoint m_mousePos;
+
+    void createTower();
+
+    void selectTower();
 };
 
 #endif // SCREEN_HPP

@@ -33,9 +33,24 @@ const QString& BlasterTower::icone() const
     return s_icone;
 }
 
+bool BlasterTower::canLevelUp() const
+{
+    return false;
+}
+
+void BlasterTower::levelUp()
+{
+
+}
+
 bool BlasterTower::canFire() const
 {
     return Attacker::canFire() && energy() > 20;
+}
+
+std::string BlasterTower::label() const
+{
+    return "Blaster Tower";
 }
 
 namespace
